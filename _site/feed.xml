@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scratch Pad</title>
+    <description>somewhere I can write stuff
+</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 05 Feb 2021 15:27:56 +0900</pubDate>
+    <lastBuildDate>Fri, 05 Feb 2021 15:27:56 +0900</lastBuildDate>
+    <generator>Jekyll v3.8.6</generator>
+    
+      <item>
+        <title>Container Part 3</title>
+        <description>&lt;h1 id=&quot;container-part-3&quot;&gt;Container Part 3&lt;/h1&gt; &lt;p&gt;&lt;img src=&quot;/assets/docker_logo.png&quot; alt=&quot;Docker&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;docker-github-repo-structure&quot;&gt;Docker github repo structure&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;docker has many modules (cli, engine, containerd, runc, …)&lt;/li&gt; &lt;li&gt;they have divided the modules into different...</description>
+        <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/container/2021/02/05/container3.html</link>
+        <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container3.html</guid>
+        
+        
+        <category>Container</category>
+        
+      </item>
+    
+      <item>
+        <title>Container Part 2</title>
+        <description>&lt;h1 id=&quot;container-part-2&quot;&gt;Container Part 2&lt;/h1&gt; &lt;p&gt;&lt;img src=&quot;/assets/docker_logo.png&quot; alt=&quot;Docker&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;container-internals&quot;&gt;Container Internals&lt;/h2&gt; &lt;p&gt;&lt;img src=&quot;/assets/DockerInternals.png&quot; alt=&quot;Docker Internals&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;1-client-sends-a-request&quot;&gt;1. client sends a request&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;Uses REST API&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;2-docker-daemon&quot;&gt;2. Docker...</description>
+        <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/container/2021/02/05/container2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container2.html</guid>
+        
+        
+        <category>Container</category>
+        
+      </item>
+    
+      <item>
+        <title>Container Part 1</title>
+        <description>&lt;h1 id=&quot;container-part-1---container-basics&quot;&gt;Container Part 1 - Container basics&lt;/h1&gt; &lt;p&gt;&lt;img src=&quot;/assets/docker_logo.png&quot; alt=&quot;Docker&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;1-what-is-a-container&quot;&gt;1. What is a container&lt;/h2&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;container is a standard unit of software that packages up code...</description>
+        <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/container/2021/02/05/container1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container1.html</guid>
+        
+        
+        <category>Container</category>
+        
+      </item>
+    
+  </channel>
+</rss>
