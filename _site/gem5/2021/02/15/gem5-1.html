@@ -15,7 +15,7 @@
 
   <!-- External libraries -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/.min.css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
 
   <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
@@ -253,8 +253,10 @@
 
 <span class="c1"># the system object will be the parent of all other objects
 # in the simulated system
-# it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
-</span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
+# it contains alot of functional information 
+# (e.g. physical memory ranges, root clock domain, kernel ...)
+</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
 
 <span class="c1"># set clock domain
 </span><span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span> <span class="o">=</span> <span class="n">SrcClockDomain</span><span class="p">()</span>
@@ -310,7 +312,8 @@
 
 <span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
 <span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span>
+   <span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
 </code></pre></div></div>
 
 <h2 id="adding-a-cache-to-the-configuration-script">Adding a Cache to the configuration script</h2>
@@ -411,7 +414,8 @@
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__m5_main__"</span><span class="p">:</span>
     <span class="c1"># the system object will be the parent of all other objects
 </span>    <span class="c1"># in the simulated system
-</span>    <span class="c1"># it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
+</span>    <span class="c1"># it contains alot of functional information 
+</span>    <span class="c1"># (e.g. physical memory ranges, root clock domain, kernel ...)
 </span>    <span class="n">args</span> <span class="o">=</span> <span class="n">get_arguments</span><span class="p">()</span>
 
     <span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
@@ -470,7 +474,8 @@
     <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span><span class="o">.</span><span class="nb">range</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
 
-    <span class="c1"># in the syscall emulation mode, we just need to pass the application binary
+    <span class="c1"># in the syscall emulation mode, 
+</span>    <span class="c1"># we just need to pass the application binary
 </span>    <span class="c1"># then give this process to the cpu workload
 </span>    <span class="c1"># and finally create the functional exectuion contexts in the CPU
 </span>    <span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">()</span>
@@ -485,7 +490,8 @@
 
     <span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
     <span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span>
+      <span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
 </code></pre></div></div>
 
 <h1 id="output-statistics">Output statistics</h1>
