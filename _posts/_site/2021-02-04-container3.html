@@ -1,64 +1,39 @@
-<h1 id="container-part-1">Container Part 1</h1>
+<h1 id="container-part-3">Container Part 3</h1>
 <p><img src="/assets/docker_logo.png" alt="Docker" /></p>
 
-<h2 id="1-what-is-a-container">1. What is a container</h2>
+<h2 id="docker-github-repo-structure">Docker github repo structure</h2>
 <ul>
-  <li>
-    <p>container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another</p>
-  </li>
-  <li>
-    <p>Although when using docker containers, it gives the the “illusion” of being inside a virtual machine. However, as will be explained, they are two very different technologies.</p>
-  </li>
+  <li>docker has many modules (cli, engine, containerd, runc, …)</li>
+  <li>they have divided the modules into different repositories</li>
 </ul>
 
-<h2 id="2-comparisons-with-vms">2. Comparisons with VMs</h2>
+<h2 id="mobymoby">moby/moby</h2>
 <ul>
-  <li>it is lightweight compared to VMs
-    <ul>
-      <li>VM : run guest OS on top of host OS (hypervisor) to emulate guest OS behavior
-        <ul>
-          <li>HW -&gt; Host OS (Hypervisor) -&gt; VM (Guest OS + Application)</li>
-        </ul>
-      </li>
-      <li>container : use the host OS directly to provide isolation
-        <ul>
-          <li>HW -&gt; Host OS -&gt; Docker Engine -&gt; Container &amp; Application</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>a container is simpley a group of processes that are isolated!!!</li>
+  <li>client cli</li>
+  <li>docker daemon</li>
+  <li>go here <a href="https://github.com/moby/moby/tree/master/docs/contributing">moby-documentation</a> to see how to modify the docker daemon and test it!!</li>
 </ul>
 
-<h2 id="3-then-how-does-containers-provide-isolation">3. Then how does containers provide isolation???</h2>
+<h2 id="mobylibnetwork">moby/libnetwork</h2>
 <ul>
-  <li>they use linux namespaces and cgroups!!
-    <ul>
-      <li>although docker supports windows nowadays, I would rather stick to linux</li>
-    </ul>
-  </li>
-  <li>linux namespaces
-    <ul>
-      <li>to understand linux namespaces, we need to understand the concept of “jail” first
-        <ul>
-          <li>imagine this file system /home/{bin, joonho}</li>
-          <li>if i chroot to /home/joonho, the root will change to /home/joonho, and files from /joonho downwards in the fs will be inside a “jail”</li>
-          <li>however, this jail does not provide good isolation since we can still access the / directory</li>
-          <li>to provide a improved isolation, the linux namespace was introduced</li>
-        </ul>
-      </li>
-      <li>there are mnt, pid, net, ipc, uts, user and cgroup namespaces</li>
-    </ul>
-  </li>
-  <li>example (pid namespace)
-<img src="/assets/pid_namespace.jpg" alt="pid namespace" />
-    <ul>
-      <li>in the host namespace, all process has pid 1 ~ 6</li>
-      <li>in the client pid namespace, processes has pids 1 ~ 3</li>
-      <li>when a container is created, a pid 1 process within the new pid namespace is created</li>
-      <li>all process within the container is a descendent of pid 1 and thus within the created pid namespace, and hence obtains isolation from the host pid namespace</li>
-      <li>similar for other namespaces</li>
-    </ul>
-  </li>
+  <li>networking api for docker</li>
+  <li>go here <a href="https://github.com/moby/libnetwork">moby/libnetwork</a> to see the repo</li>
+</ul>
+
+<h2 id="containerdcontainerd">containerd/containerd</h2>
+<ul>
+  <li>go here <a href="https://github.com/containerd/containerd">containerd</a> to see the repo</li>
+</ul>
+
+<h2 id="opencontainersrunc">opencontainers/runc</h2>
+<ul>
+  <li>go here <a href="https://github.com/opencontainers/runc">runc</a> to see the repo</li>
+</ul>
+
+<h2 id="usage">usage</h2>
+<ul>
+  <li>to test changes on the docker daemon : go to moby/moby repo and look at the documentation</li>
+  <li>to test changes on containers : go to opencontainer/runc repo and look at the documentation</li>
+  <li>to do both(?) : make changes on runc, and change imports on the moby source code</li>
 </ul>
 

@@ -1,0 +1,21 @@
+<hr />
+
+<p>layout: post
+title:  "Container Part 2"
+date:   2021-02-04T14:25:52-05:00
+author: Joonho Hwangbo </p>
+
+<h2>categories: Container</h2>
+
+<h1>Container Part 2 - Container Internals</h1>
+
+<p><img src="/assets/docker_logo.png" alt="Docker" title="" /></p>
+
+<h2>1. Overview</h2>
+
+<p><img src="/assets/DockerInternals.png" alt="docker internals" title="" />
+- client : docker user, sends requests using cli
+- daemon (docker engine) : responsible for image management &amp; build, authentication, security, core networking(constructs default bridge, docker0 etc), orchestration, uses the REST API to get requests from the client
+- containerd : controls the container life cycle
+- runc : cli that wraps around libcontainer, interacts with the kernel to construct namespaces, cgroups etc
+- shim : detaches runc from containerd(????)</p>

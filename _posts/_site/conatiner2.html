@@ -1,0 +1,13 @@
+<h1 id="container-part-2---container-internals">Container Part 2 - Container Internals</h1>
+<p><img src="/assets/docker_logo.png" alt="Docker" /></p>
+
+<h2 id="1-overview">1. Overview</h2>
+<p><img src="/assets/DockerInternals.png" alt="docker internals" /></p>
+<ul>
+  <li>client : docker user, sends requests using cli</li>
+  <li>daemon (docker engine) : responsible for image management &amp; build, authentication, security, core networking(constructs default bridge, docker0 etc), orchestration, uses the REST API to get requests from the client</li>
+  <li>containerd : controls the container life cycle</li>
+  <li>runc : cli that wraps around libcontainer, interacts with the kernel to construct namespaces, cgroups etc</li>
+  <li>shim : detaches runc from containerd(????)</li>
+</ul>
+

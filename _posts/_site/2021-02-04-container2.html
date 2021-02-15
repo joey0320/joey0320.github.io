@@ -2,3 +2,58 @@
 <p><img src="/assets/docker_logo.png" alt="Docker" /></p>
 
 <h2 id="container-internals">Container Internals</h2>
+<p><img src="/assets/DockerInternals.png" alt="Docker Internals" /></p>
+
+<h2 id="1-client-sends-a-request">1. client sends a request</h2>
+<ul>
+  <li>Uses REST API</li>
+</ul>
+
+<h2 id="2-docker-daemon">2. Docker Daemon</h2>
+<ul>
+  <li>gets the request and figures out what the request is by using a routing table</li>
+  <li>then pulls the image if the images is not in a local image repo</li>
+  <li>converts the image into a OCI bundle</li>
+  <li>responsible for
+    <ul>
+      <li>image management,</li>
+      <li>image builds</li>
+      <li>authentication</li>
+      <li>security</li>
+      <li>networking : when started, creates a default network bridge (docker0)</li>
+      <li>orchestration</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="3-containerd">3. Containerd</h2>
+<ul>
+  <li>interacts with the daemon with gRPC (CRUD style API)</li>
+  <li>responsible for
+    <ul>
+      <li>container life cycle</li>
+      <li>execution logic of containers</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="4-runc">4. runc</h2>
+<ul>
+  <li>cli that wraps around libcontainer</li>
+  <li>interacts with the kernel to build the container
+    <ul>
+      <li>creates namespaces, cgroups</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="5-shim">5. shim</h2>
+<ul>
+  <li>detaches the runc from containerd????</li>
+</ul>
+
+<h2 id="6-container">6. container</h2>
+<ul>
+  <li>child process of runc</li>
+  <li>that is why containers have unique namespaces !! they are forks!!</li>
+</ul>
