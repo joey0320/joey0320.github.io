@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>1. Gem5 simulator - quick start</title>
+  <meta name="description" content="Gem5 simulator  references : https://www.gem5.org/documentation">
+  
+  <meta name="author" content="Joonho Hwangbo">
+  <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Gem5 simulator  references : https://www.gem5.org/documentation" />
+  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/15/gem5-1.html">
+  <meta property="og:site_name" content="Scratch Pad" />
+  <meta property="og:title" content="1. Gem5 simulator - quick start" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="1. Gem5 simulator - quick start">
+  <meta name="twitter:description" content="Gem5 simulator  references : https://www.gem5.org/documentation">
+  <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
+  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/15/gem5-1.html">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/15/gem5-1.html">
+	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
+	
+	<!-- Tooltips -->
+	<script type="text/javascript">
+		window.tooltips = []
+	</script>
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Scratch Pad">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+				
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/posts/">Posts</a>
+	
+
+	
+	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">1. Gem5 simulator - quick start</h1>
+      <p class="info">by <strong>Joonho Hwangbo</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">February 15, 2021</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Gem5">Gem5</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h1 id="gem5-simulator">Gem5 simulator</h1>
+<ul>
+  <li>references : https://www.gem5.org/documentation</li>
+</ul>
+
+<h2 id="what-is-gem5">what is Gem5?</h2>
+<p>gem5 is a modular discrete event driven computer system simulator platform. That means that:</p>
+
+<ul>
+  <li>gem5’s components can be rearranged, parameterized, extended or replaced easily to suit your needs.</li>
+  <li>It simulates the passing of time as a series of discrete events.</li>
+  <li>Its intended use is to simulate one or more computer systems in various ways.</li>
+  <li>It’s more than just a simulator; it’s a simulator platform that lets you use as many of its premade components as you want to build up your own simulation system.</li>
+</ul>
+
+<h2 id="building-gem5">Building Gem5</h2>
+<ul>
+  <li>I made a docker image that has most dependencies installed (we have to install qemu-system-x86 in the future for full system simulation)</li>
+</ul>
+
+<p><code class="highlighter-rouge">docker pull joonho0320/v4</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it \
+	--device=/dev/kvm \
+    --workdir="/home/$USER" \
+	-v /home/joonho/:/home/joonho/ \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	joonho0320/v4
+</code></pre></div></div>
+
+<ul>
+  <li>to run in user mode</li>
+</ul>
+
+<p><code class="highlighter-rouge">export UID=$(id -u)</code></p>
+
+<p><code class="highlighter-rouge">export GID=$(id -g)</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it \
+	-u $UID:$GID \
+	--device=/dev/kvm \
+    --workdir="/home/$USER" \
+	-v /home/joonho/:/home/joonho/ \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	joonho0320/v4
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>mount docker.sock to enable docker inside the container</p>
+  </li>
+  <li>
+    <p>Now the environment for building and running Gem5 is all set!!!</p>
+  </li>
+  <li><code class="highlighter-rouge">scons build/&lt;ISA&gt;/gem5.opt -j20</code>
+    <ul>
+      <li>
+        <ISA> should be the ISA that you want to build and run
+</ISA>
+      </li>
+      <li>e.g. <code class="highlighter-rouge">scons build/X86/gem5.opt -j20</code></li>
+    </ul>
+  </li>
+  <li>output binary types
+    <ul>
+      <li><code class="highlighter-rouge">opt</code> : debugging and most optimizations (just use this …)</li>
+      <li><code class="highlighter-rouge">debug</code> : no optimizations and debug symbols</li>
+      <li><code class="highlighter-rouge">fast</code></li>
+      <li><code class="highlighter-rouge">prof and perf</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="creating-a-simple-configuration-script">Creating a simple configuration script</h2>
+
+<ul>
+  <li>
+    <p>The gem5 binary takes, as a parameter, a python script which sets up and executes the simulation. In this script, you create a system to simulate, create all of the components of the system, and specify all of the parameters for the system components. Then, from the script, you can begin the simulation.</p>
+  </li>
+  <li>gem5’s modular design is built around the SimObject type</li>
+  <li>Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, buses, etc.</li>
+  <li>
+    <p>gem5 exports all of these objects from their C++ implementation to python</p>
+  </li>
+  <li>key point : gem5 objects are built from C++ implementation</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="c1"># the system object will be the parent of all other objects
+# in the simulated system
+# it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
+</span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
+
+<span class="c1"># set clock domain
+</span><span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span> <span class="o">=</span> <span class="n">SrcClockDomain</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="s">'1GHz'</span>
+<span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">voltage_domain</span> <span class="o">=</span> <span class="n">VoltageDomain</span><span class="p">()</span>
+
+<span class="c1"># set memory : memory is usually timing mode
+</span><span class="n">system</span><span class="o">.</span><span class="n">mem_mode</span> <span class="o">=</span> <span class="s">'timing'</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">AddrRange</span><span class="p">(</span><span class="s">'512MB'</span><span class="p">)]</span>
+
+<span class="c1"># set cpu
+</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span> <span class="o">=</span> <span class="n">TimingSimpleCPU</span><span class="p">()</span>
+
+<span class="c1"># set systemwide memory bus
+</span><span class="n">system</span><span class="o">.</span><span class="n">membus</span> <span class="o">=</span> <span class="n">SystemXBar</span><span class="p">()</span>
+
+<span class="c1"># no cache system
+# directly connect caches to the membus
+# memobject1.master = memobject1.slave
+# master sends requeset
+# slave sends the responses
+</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+
+<span class="c1"># only required for X86
+# create IO controller on the cpu
+# and connect it to the mem bus
+</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createInterruptController</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pio</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_master</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_slave</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+
+<span class="n">system</span><span class="o">.</span><span class="n">system_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+
+<span class="c1"># create a memory controller
+</span><span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span> <span class="o">=</span> <span class="n">MemCtrl</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span> <span class="o">=</span> <span class="n">DDR3_1600_8x8</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span><span class="o">.</span><span class="nb">range</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+
+<span class="c1"># in the syscall emulation mode, we just need to pass the application binary
+# then give this process to the cpu workload
+# and finally create the functional exectuion contexts in the CPU
+</span><span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">()</span>
+<span class="n">process</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tests/test-progs/hello/bin/x86/linux/hello'</span><span class="p">]</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">workload</span> <span class="o">=</span> <span class="n">process</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createThreads</span><span class="p">()</span>
+
+<span class="c1"># finally we instantiate the system and run the simulation
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">full_system</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">)</span>
+
+<span class="n">m5</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
+<span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+</code></pre></div></div>
+
+<h2 id="adding-a-cache-to-the-configuration-script">Adding a Cache to the configuration script</h2>
+<ul>
+  <li>when a SimObject is created, the parameters are passed to the C++ implementation</li>
+  <li>the Cache Object is implemented in the src/mem/cache/Cache.py</li>
+</ul>
+
+<p><code class="highlighter-rouge">tutorial/caches.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="n">Cache</span>
+
+<span class="k">class</span> <span class="nc">L1Cache</span><span class="p">(</span><span class="n">Cache</span><span class="p">):</span>
+    <span class="c1"># look at the source code to figure out what these parameters mean
+</span>    <span class="c1"># they are parameters that do not have any default values in base cache
+</span>    <span class="n">assoc</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">tag_latency</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">data_latency</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">response_latency</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">mshrs</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">tgts_per_mshr</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L1Cache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">connectCPU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+       <span class="k">raise</span> <span class="nb">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">connectBus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mem_side</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">slave</span>
+
+<span class="k">class</span> <span class="nc">L1ICache</span><span class="p">(</span><span class="n">L1Cache</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s">'16kB'</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L1ICache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+          <span class="k">return</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">connectCPU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cpu_side</span> <span class="o">=</span> <span class="n">cpu</span><span class="o">.</span><span class="n">icache_port</span>
+
+<span class="k">class</span> <span class="nc">L1DCache</span><span class="p">(</span><span class="n">L1Cache</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s">'64kB'</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L1DCache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+          <span class="k">return</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">connectCPU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cpu_side</span> <span class="o">=</span> <span class="n">cpu</span><span class="o">.</span><span class="n">dcache_port</span>
+
+
+<span class="k">class</span> <span class="nc">L2Cache</span><span class="p">(</span><span class="n">Cache</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s">'256kB'</span>
+    <span class="n">assoc</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">tag_latency</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">data_latency</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">response_latency</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">mshrs</span> <span class="o">=</span><span class="mi">20</span>
+    <span class="n">tgts_per_mshr</span> <span class="o">=</span> <span class="mi">12</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L2Cache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+          <span class="k">return</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">connectCPUSideBus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cpu_side</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">master</span>
+
+    <span class="k">def</span> <span class="nf">connectMemSideBus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">mem_side</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">slave</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">tutorial/two_level.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">caches</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="k">def</span> <span class="nf">get_arguments</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"--l1d_size"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"L1 data cache size"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"--l1i_size"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"L1 instruction cache size"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"--l2_size"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"L2 cache size"</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">args</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__m5_main__"</span><span class="p">:</span>
+    <span class="c1"># the system object will be the parent of all other objects
+</span>    <span class="c1"># in the simulated system
+</span>    <span class="c1"># it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
+</span>    <span class="n">args</span> <span class="o">=</span> <span class="n">get_arguments</span><span class="p">()</span>
+
+    <span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
+
+    <span class="c1"># set clock domain
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span> <span class="o">=</span> <span class="n">SrcClockDomain</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="s">'1GHz'</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">voltage_domain</span> <span class="o">=</span> <span class="n">VoltageDomain</span><span class="p">()</span>
+
+    <span class="c1"># set memory : memory is usually timing mode
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">mem_mode</span> <span class="o">=</span> <span class="s">'timing'</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">AddrRange</span><span class="p">(</span><span class="s">'512MB'</span><span class="p">)]</span>
+
+    <span class="c1"># set cpu
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span> <span class="o">=</span> <span class="n">TimingSimpleCPU</span><span class="p">()</span>
+
+    <span class="c1"># create caches
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span> <span class="o">=</span> <span class="n">L1ICache</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l1d_size</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache</span> <span class="o">=</span> <span class="n">L1DCache</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l1i_size</span><span class="p">)</span>
+
+    <span class="c1"># connect caches to cpu ports
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span><span class="o">.</span><span class="n">connectCPU</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache</span><span class="o">.</span><span class="n">connectCPU</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="p">)</span>
+
+    <span class="c1"># we need to create a L2 bus since the L2 cache only has a single port
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">l2bus</span> <span class="o">=</span> <span class="n">L2XBar</span><span class="p">()</span>
+
+    <span class="c1"># connect L1 cache to L2 bus
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span><span class="o">.</span><span class="n">connectBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">l2bus</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache</span><span class="o">.</span><span class="n">connectBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">l2bus</span><span class="p">)</span>
+
+    <span class="c1"># create L2 caceh
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">l2cache</span> <span class="o">=</span> <span class="n">L2Cache</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l2_size</span><span class="p">)</span>
+
+    <span class="c1"># set systemwide memory bus
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">membus</span> <span class="o">=</span> <span class="n">SystemXBar</span><span class="p">()</span>
+
+    <span class="c1"># connect L2 cache
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">l2cache</span><span class="o">.</span><span class="n">connectCPUSideBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">l2bus</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">l2cache</span><span class="o">.</span><span class="n">connectMemSideBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="p">)</span>
+
+    <span class="c1"># only required for X86
+</span>    <span class="c1"># create IO controller on the cpu
+</span>    <span class="c1"># and connect it to the mem bus
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createInterruptController</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pio</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_master</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_slave</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+
+    <span class="n">system</span><span class="o">.</span><span class="n">system_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+
+    <span class="c1"># create a memory controller
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span> <span class="o">=</span> <span class="n">MemCtrl</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span> <span class="o">=</span> <span class="n">DDR3_1600_8x8</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span><span class="o">.</span><span class="nb">range</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+
+    <span class="c1"># in the syscall emulation mode, we just need to pass the application binary
+</span>    <span class="c1"># then give this process to the cpu workload
+</span>    <span class="c1"># and finally create the functional exectuion contexts in the CPU
+</span>    <span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">()</span>
+    <span class="n">process</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tests/test-progs/hello/bin/x86/linux/hello'</span><span class="p">]</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">workload</span> <span class="o">=</span> <span class="n">process</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createThreads</span><span class="p">()</span>
+
+    <span class="c1"># finally we instantiate the system and run the simulation
+</span>    <span class="n">root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">full_system</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">)</span>
+
+    <span class="n">m5</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
+    <span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+</code></pre></div></div>
+
+<h1 id="output-statistics">Output statistics</h1>
+<ul>
+  <li><code class="highlighter-rouge">stats.txt</code> : general statistics about the execution</li>
+  <li><code class="highlighter-rouge">config.ini</code> : information about the system that you simulated</li>
+</ul>
+
+</article>
+
+
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Scratch Pad</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+				
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/posts/">Posts</a>
+	
+
+	
+	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:joonho0320@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">joonho0320@gmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://github.com/joey0320" title="Fork me on GitHub">
+              <i class="fa fa-github"></i>
+              <span class="username">joey0320</span>
+            </a>
+          </li>
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">somewhere I can write stuff
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
+<script src="//unpkg.com/popper.js@1"></script>
+<script src="//unpkg.com/tippy.js@5"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+
+	// Enable tooltips via Tippy.js
+	if (Array.isArray(window.tooltips)) {
+		window.tooltips.forEach(function(tooltip) {
+			var selector = tooltip[0];
+			var config = tooltip[1];
+			tippy(selector, config);
+		})
+	}
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

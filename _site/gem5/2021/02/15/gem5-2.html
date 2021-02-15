@@ -6,9 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Container</title>
-  <meta name="description" content="somewhere I can write stuff
-">
+  <title>2. Gem5 - Code style</title>
+  <meta name="description" content="Gem5 Code styleNaming Conventions  class names : Upper CamelCase ClassName  acronyms : all uppercase CPU  class members (methods, variables) : lower CamelCas...">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -42,11 +41,10 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="somewhere I can write stuff
-" />
-  <meta property="og:url" content="http://localhost:4000/category/container/">
+  <meta property="og:description" content="Gem5 Code styleNaming Conventions  class names : Upper CamelCase ClassName  acronyms : all uppercase CPU  class members (methods, variables) : lower CamelCas..." />
+  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/15/gem5-2.html">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="Container" />
+  <meta property="og:title" content="2. Gem5 - Code style" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -57,18 +55,17 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Container">
-  <meta name="twitter:description" content="somewhere I can write stuff
-">
+  <meta name="twitter:title" content="2. Gem5 - Code style">
+  <meta name="twitter:description" content="Gem5 Code styleNaming Conventions  class names : Upper CamelCase ClassName  acronyms : all uppercase CPU  class members (methods, variables) : lower CamelCas...">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/category/container/">
+  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/15/gem5-2.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/category/container/">
+  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/15/gem5-2.html">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -133,34 +130,91 @@
 
 
     <div class="page-content">
-        <div class="wrapper">
-<div class="page">
+        <div class="post">
 
-  <header class="post-header">
-    <h1 class="post-title">Posts in "Container"</h1>
-  </header>
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">2. Gem5 - Code style</h1>
+      <p class="info">by <strong>Joonho Hwangbo</strong></p>
+    </header>
+  </div>
+</div>
 
-  <span class="page-divider">
+<div class="wrapper">
+
+ <span class="page-divider">
   <span class="one"></span>
   <span class="two"></span>
 </span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">February 15, 2021</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Gem5">Gem5</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h1 id="gem5-code-style">Gem5 Code style</h1>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<ul>
+  <li>class names : Upper CamelCase <code class="highlighter-rouge">ClassName</code></li>
+  <li>acronyms : all uppercase <code class="highlighter-rouge">CPU</code></li>
+  <li>class members (methods, variables) : lower CamelCase <code class="highlighter-rouge">aMemberVariable</code></li>
+  <li>local variables : underscore <code class="highlighter-rouge">local_variable</code></li>
+</ul>
+
+<h2 id="file-structure">File structure</h2>
+<ul>
+  <li>never contain <code class="highlighter-rouge">using namespace ...</code> header files</li>
+</ul>
+
+<h2 id="documentation">Documentation</h2>
+<ul>
+  <li>Doxygen style
+```
+/**</li>
+  <li>This is the brief description. This is the start of the detailed</li>
+  <li>description. Detailed Description continued.
+ */
+ ```</li>
+</ul>
+
+</article>
 
 
-  <article class="post-content">
-    <ul class="posts-list">
-      
-      <li><strong><a class="post-link" href="/container/2021/02/05/container3.html">Container Part 3</a></strong><span class="post-date"> - February 5, 2021</span></li>
-      
-      <li><strong><a class="post-link" href="/container/2021/02/05/container2.html">Container Part 2</a></strong><span class="post-date"> - February 5, 2021</span></li>
-      
-      <li><strong><a class="post-link" href="/container/2021/02/05/container1.html">Container Part 1</a></strong><span class="post-date"> - February 5, 2021</span></li>
-      
-    </ul>
-  </article>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
 
 </div>
 </div>
-<br>
 
     </div>
 

@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Container Part 1</title>
-  <meta name="description" content="Container Part 1 - Container basics">
+  <title>3. Gem5 - Creating a very simple SimObject</title>
+  <meta name="description" content="Creating a Very simple SimObject">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -41,10 +41,10 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Container Part 1 - Container basics" />
-  <meta property="og:url" content="http://localhost:4000/container/2021/02/05/container1.html">
+  <meta property="og:description" content="Creating a Very simple SimObject" />
+  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/15/gem5-3.html">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="Container Part 1" />
+  <meta property="og:title" content="3. Gem5 - Creating a very simple SimObject" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -55,17 +55,17 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Container Part 1">
-  <meta name="twitter:description" content="Container Part 1 - Container basics">
+  <meta name="twitter:title" content="3. Gem5 - Creating a very simple SimObject">
+  <meta name="twitter:description" content="Creating a Very simple SimObject">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/container/2021/02/05/container1.html">
+  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/15/gem5-3.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/container/2021/02/05/container1.html">
+  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/15/gem5-3.html">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -135,7 +135,7 @@
 <div class="post-header-container " >
   <div class="scrim ">
     <header class="post-header">
-      <h1 class="title">Container Part 1</h1>
+      <h1 class="title">3. Gem5 - Creating a very simple SimObject</h1>
       <p class="info">by <strong>Joonho Hwangbo</strong></p>
     </header>
   </div>
@@ -150,79 +150,118 @@
  
 
 <section class="post-meta">
-  <div class="post-date">February 5, 2021</div>
+  <div class="post-date">February 15, 2021</div>
   <div class="post-categories">
   in 
     
-    <a href="/category/Container">Container</a>
+    <a href="/category/Gem5">Gem5</a>
     
   
   </div>
 </section>
 
 <article class="post-content">
-  <h1 id="container-part-1---container-basics">Container Part 1 - Container basics</h1>
-<p><img src="/assets/docker_logo.png" alt="Docker" /></p>
+  <h1 id="creating-a-very-simple-simobject">Creating a Very simple SimObject</h1>
 
-<h2 id="1-what-is-a-container">1. What is a container</h2>
+<h2 id="1-create-a-python-class-for-the-simobject">1. Create a Python Class for the SimObject</h2>
+<p><code class="highlighter-rouge">gem5/src/tutorial/HelloObject.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">m5.params</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">m5.SimObject</span> <span class="kn">import</span> <span class="n">SimObject</span>
+
+<span class="c1"># python wrapper for the C++ implementation of the SimObject
+</span><span class="k">class</span> <span class="nc">HelloObject</span><span class="p">(</span><span class="n">SimObject</span><span class="p">):</span>
+    <span class="c1"># convention to have same name with class
+</span>    <span class="c1"># type is the C++ class that you are wrapping with this Python SimObject
+</span>    <span class="nb">type</span><span class="o">=</span><span class="s">'HelloObject'</span>
+
+    <span class="c1"># file that contains the declaration of the class used as the 'type' parameter
+</span>    <span class="c1"># convention is to use lowercase and underscore with the same name
+</span>    <span class="n">cxx_header</span><span class="o">=</span><span class="s">'tutorial/hello_object.hh'</span>
+</code></pre></div></div>
+
+<h2 id="2-implement-the-simobject-in-c">2. Implement the SimObject in C++</h2>
+<p><code class="highlighter-rouge">gem5/src/tutorial/hello_object.hh</code></p>
+
+<pre><code class="language-C++">#ifndef __TUTORIAL_GEM5_HELLO_OBJECT__
+#define __TUTORIAL_GEM5_HELLO_OBJECT__
+
+#include "params/HelloObject.hh"
+#include "sim/sim_object.hh"
+
+class HelloObject : public SimObject {
+    public:
+       // constructor of a SimObject takes a parameter object
+       // which is autmatically created by the build system
+       HelloObject(HelloObjectParams *p);
+};
+
+#endif
+</code></pre>
+
+<p><code class="highlighter-rouge">gem5/src/tutorial/hello_object.hh</code></p>
+
+<pre><code class="language-C++">#include "tutorial/hello_object.hh"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+// constructor : pass the parameter object to SimObject
+HelloObject::HelloObject(HelloObjectParams *params):
+    SimObject(params)
+{
+    cout &lt;&lt; "hello world from simobject" &lt;&lt; endl;
+}
+
+// implement for the parameter type
+// implicitly created from the SimObject Python declaration, namely, the create function
+// returns a new instantiation of the SimObject
+HelloObject* HelloObjectParams::create() {
+    return new HelloObject(this);
+}
+</code></pre>
+
+<h2 id="3-register-the-files">3. Register the files</h2>
+
 <ul>
-  <li>
-    <p>container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another</p>
-  </li>
-  <li>
-    <p>Although when using docker containers, it gives the the “illusion” of being inside a virtual machine. However, as will be explained, they are two very different technologies.</p>
-  </li>
+  <li>we have to tell the build system about the C++ and python files</li>
 </ul>
 
-<h2 id="2-comparisons-with-vms">2. Comparisons with VMs</h2>
+<p><code class="highlighter-rouge">gem5/src/tutorial/SConscript</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Import</span><span class="p">(</span><span class="s">'*'</span><span class="p">)</span>
+
+<span class="n">SimObject</span><span class="p">(</span><span class="s">'HelloObject.py'</span><span class="p">)</span>
+<span class="n">Source</span><span class="p">(</span><span class="s">'hello_object.cc'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="4-rebuild-the-gem5-system">4. Rebuild the Gem5 system</h2>
+<p><code class="highlighter-rouge">scons build/X86/gem5.opt -j20</code></p>
+
+<h2 id="5-create-a-config-script-and-run-it-">5. Create a config script and run it !!</h2>
+
 <ul>
-  <li>it is lightweight compared to VMs
-    <ul>
-      <li>VM : run guest OS on top of host OS (hypervisor) to emulate guest OS behavior
-        <ul>
-          <li>HW -&gt; Host OS (Hypervisor) -&gt; VM (Guest OS + Application)</li>
-        </ul>
-      </li>
-      <li>container : use the host OS directly to provide isolation
-        <ul>
-          <li>HW -&gt; Host OS -&gt; Docker Engine -&gt; Container &amp; Application</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>a container is simpley a group of processes that are isolated!!!</li>
+  <li>config script</li>
 </ul>
 
-<h2 id="3-then-how-does-containers-provide-isolation">3. Then how does containers provide isolation???</h2>
+<p><code class="highlighter-rouge">gem5/config/tutorial/run_script.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">full_system</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">hello</span> <span class="o">=</span> <span class="n">HelloObject</span><span class="p">()</span>
+
+<span class="n">m5</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
+<span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+</code></pre></div></div>
+
 <ul>
-  <li>they use linux namespaces and cgroups!!
-    <ul>
-      <li>although docker supports windows nowadays, I would rather stick to linux</li>
-    </ul>
-  </li>
-  <li>linux namespaces
-    <ul>
-      <li>to understand linux namespaces, we need to understand the concept of “jail” first
-        <ul>
-          <li>imagine this file system /home/{bin, joonho}</li>
-          <li>if i chroot to /home/joonho, the root will change to /home/joonho, and files from /joonho downwards in the fs will be inside a “jail”</li>
-          <li>however, this jail does not provide good isolation since we can still access the / directory</li>
-          <li>to provide a improved isolation, the linux namespace was introduced</li>
-        </ul>
-      </li>
-      <li>there are mnt, pid, net, ipc, uts, user and cgroup namespaces</li>
-    </ul>
-  </li>
-  <li>example (pid namespace)
-<img src="/assets/pid_namespace.jpg" alt="pid namespace" />
-    <ul>
-      <li>in the host namespace, all process has pid 1 ~ 6</li>
-      <li>in the client pid namespace, processes has pids 1 ~ 3</li>
-      <li>when a container is created, a pid 1 process within the new pid namespace is created</li>
-      <li>all process within the container is a descendent of pid 1 and thus within the created pid namespace, and hence obtains isolation from the host pid namespace</li>
-      <li>similar for other namespaces</li>
-    </ul>
-  </li>
+  <li>run it !!
+<code class="highlighter-rouge">build/X86/gem5.opt configs/tutorial/run_script.py</code></li>
 </ul>
 
 

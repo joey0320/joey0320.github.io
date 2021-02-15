@@ -1,0 +1,332 @@
+<h1 id="gem5-simulator">Gem5 simulator</h1>
+<ul>
+  <li>references : https://www.gem5.org/documentation</li>
+</ul>
+
+<h2 id="what-is-gem5">what is Gem5?</h2>
+<p>gem5 is a modular discrete event driven computer system simulator platform. That means that:</p>
+
+<ul>
+  <li>gem5’s components can be rearranged, parameterized, extended or replaced easily to suit your needs.</li>
+  <li>It simulates the passing of time as a series of discrete events.</li>
+  <li>Its intended use is to simulate one or more computer systems in various ways.</li>
+  <li>It’s more than just a simulator; it’s a simulator platform that lets you use as many of its premade components as you want to build up your own simulation system.</li>
+</ul>
+
+<h2 id="building-gem5">Building Gem5</h2>
+<ul>
+  <li>I made a docker image that has most dependencies installed (we have to install qemu-system-x86 in the future for full system simulation)</li>
+</ul>
+
+<p><code class="highlighter-rouge">docker pull joonho0320/v4</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it \
+	--device=/dev/kvm \
+    --workdir="/home/$USER" \
+	-v /home/joonho/:/home/joonho/ \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	joonho0320/v4
+</code></pre></div></div>
+
+<ul>
+  <li>to run in user mode</li>
+</ul>
+
+<p><code class="highlighter-rouge">export UID=$(id -u)</code></p>
+
+<p><code class="highlighter-rouge">export GID=$(id -g)</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it \
+	-u $UID:$GID \
+	--device=/dev/kvm \
+    --workdir="/home/$USER" \
+	-v /home/joonho/:/home/joonho/ \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	joonho0320/v4
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>mount docker.sock to enable docker inside the container</p>
+  </li>
+  <li>
+    <p>Now the environment for building and running Gem5 is all set!!!</p>
+  </li>
+  <li><code class="highlighter-rouge">scons build/&lt;ISA&gt;/gem5.opt -j20</code>
+    <ul>
+      <li>
+        <ISA> should be the ISA that you want to build and run
+</ISA>
+      </li>
+      <li>e.g. <code class="highlighter-rouge">scons build/X86/gem5.opt -j20</code></li>
+    </ul>
+  </li>
+  <li>output binary types
+    <ul>
+      <li><code class="highlighter-rouge">opt</code> : debugging and most optimizations (just use this …)</li>
+      <li><code class="highlighter-rouge">debug</code> : no optimizations and debug symbols</li>
+      <li><code class="highlighter-rouge">fast</code></li>
+      <li><code class="highlighter-rouge">prof and perf</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="creating-a-simple-configuration-script">Creating a simple configuration script</h2>
+
+<ul>
+  <li>
+    <p>The gem5 binary takes, as a parameter, a python script which sets up and executes the simulation. In this script, you create a system to simulate, create all of the components of the system, and specify all of the parameters for the system components. Then, from the script, you can begin the simulation.</p>
+  </li>
+  <li>gem5’s modular design is built around the SimObject type</li>
+  <li>Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, buses, etc.</li>
+  <li>
+    <p>gem5 exports all of these objects from their C++ implementation to python</p>
+  </li>
+  <li>key point : gem5 objects are built from C++ implementation</li>
+</ul>
+
+<pre><code class="language-python3">import m5
+from m5.objects import *
+
+
+# the system object will be the parent of all other objects
+# in the simulated system
+# it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
+system = System()
+
+# set clock domain
+system.clk_domain = SrcClockDomain()
+system.clk_domain.clock = '1GHz'
+system.clk_domain.voltage_domain = VoltageDomain()
+
+# set memory : memory is usually timing mode
+system.mem_mode = 'timing'
+system.mem_ranges = [AddrRange('512MB')]
+
+# set cpu
+system.cpu = TimingSimpleCPU()
+
+# set systemwide memory bus
+system.membus = SystemXBar()
+
+# no cache system
+# directly connect caches to the membus
+# memobject1.master = memobject1.slave
+# master sends requeset
+# slave sends the responses
+system.cpu.icache_port = system.membus.slave
+system.cpu.dcache_port = system.membus.slave
+
+# only required for X86
+# create IO controller on the cpu
+# and connect it to the mem bus
+system.cpu.createInterruptController()
+system.cpu.interrupts[0].pio = system.membus.master
+system.cpu.interrupts[0].int_master = system.membus.slave
+system.cpu.interrupts[0].int_slave = system.membus.master
+
+system.system_port = system.membus.slave
+
+# create a memory controller
+system.mem_ctrl = MemCtrl()
+system.mem_ctrl.dram = DDR3_1600_8x8()
+system.mem_ctrl.dram.range = system.mem_ranges[0]
+system.mem_ctrl.port = system.membus.master
+
+# in the syscall emulation mode, we just need to pass the application binary
+# then give this process to the cpu workload
+# and finally create the functional exectuion contexts in the CPU
+process = Process()
+process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
+system.cpu.workload = process
+system.cpu.createThreads()
+
+# finally we instantiate the system and run the simulation
+root = Root(full_system=False, system=system)
+
+m5.instantiate()
+
+print("Beginning simulation")
+exit_event = m5.simulate()
+print("Exiting @ tick {} because {}".format(m5.curTick(), exit_event.getCause()))
+</code></pre>
+
+<h2 id="adding-a-cache-to-the-configuration-script">Adding a Cache to the configuration script</h2>
+<ul>
+  <li>when a SimObject is created, the parameters are passed to the C++ implementation</li>
+  <li>the Cache Object is implemented in the src/mem/cache/Cache.py</li>
+</ul>
+
+<p><code class="highlighter-rouge">tutorial/caches.py</code></p>
+
+<pre><code class="language-python3">import m5
+from m5.objects import Cache
+
+class L1Cache(Cache):
+    # look at the source code to figure out what these parameters mean
+    # they are parameters that do not have any default values in base cache
+    assoc = 2
+    tag_latency = 2
+    data_latency = 2
+    response_latency = 2
+    mshrs = 4
+    tgts_per_mshr = 20
+
+    def __init__(self, options=None):
+       super(L1Cache, self).__init__()
+
+    def connectCPU(self, cpu):
+       raise NotImplementedError
+
+    def connectBus(self, bus):
+      self.mem_side = bus.slave
+
+class L1ICache(L1Cache):
+    size = '16kB'
+
+    def __init__(self, size=None):
+       super(L1ICache, self).__init__()
+       if not size:
+          return
+       self.size=size
+
+    def connectCPU(self, cpu):
+       self.cpu_side = cpu.icache_port
+
+class L1DCache(L1Cache):
+    size = '64kB'
+
+    def __init__(self, size=None):
+       super(L1DCache, self).__init__()
+       if not size:
+          return
+       self.size=size
+
+    def connectCPU(self, cpu):
+       self.cpu_side = cpu.dcache_port
+
+
+class L2Cache(Cache):
+    size = '256kB'
+    assoc = 8
+    tag_latency = 20
+    data_latency = 20
+    response_latency = 20
+    mshrs =20
+    tgts_per_mshr = 12
+
+    def __init__(self, size=None):
+       super(L2Cache, self).__init__()
+       if not size:
+          return
+       self.size=size
+
+    def connectCPUSideBus(self, bus):
+       self.cpu_side = bus.master
+
+    def connectMemSideBus(self, bus):
+       self.mem_side = bus.slave
+</code></pre>
+
+<p><code class="highlighter-rouge">tutorial/two_level.py</code></p>
+
+<pre><code class="language-python3">import m5
+from m5.objects import *
+from caches import *
+import argparse
+
+def get_arguments():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--l1d_size", help="L1 data cache size")
+    parser.add_argument("--l1i_size", help="L1 instruction cache size")
+    parser.add_argument("--l2_size", help="L2 cache size")
+
+    args = parser.parse_args()
+    return args
+
+
+if __name__ == "__m5_main__":
+    # the system object will be the parent of all other objects
+    # in the simulated system
+    # it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
+    args = get_arguments()
+
+    system = System()
+
+    # set clock domain
+    system.clk_domain = SrcClockDomain()
+    system.clk_domain.clock = '1GHz'
+    system.clk_domain.voltage_domain = VoltageDomain()
+
+    # set memory : memory is usually timing mode
+    system.mem_mode = 'timing'
+    system.mem_ranges = [AddrRange('512MB')]
+
+    # set cpu
+    system.cpu = TimingSimpleCPU()
+
+    # create caches
+    system.cpu.icache = L1ICache(args.l1d_size)
+    print(system.cpu.icache.size)
+    system.cpu.dcache = L1DCache(args.l1i_size)
+
+    # connect caches to cpu ports
+    system.cpu.icache.connectCPU(system.cpu)
+    system.cpu.dcache.connectCPU(system.cpu)
+
+    # we need to create a L2 bus since the L2 cache only has a single port
+    system.l2bus = L2XBar()
+
+    # connect L1 cache to L2 bus
+    system.cpu.icache.connectBus(system.l2bus)
+    system.cpu.dcache.connectBus(system.l2bus)
+
+    # create L2 caceh
+    system.l2cache = L2Cache(args.l2_size)
+
+    # set systemwide memory bus
+    system.membus = SystemXBar()
+
+    # connect L2 cache
+    system.l2cache.connectCPUSideBus(system.l2bus)
+    system.l2cache.connectMemSideBus(system.membus)
+
+    # only required for X86
+    # create IO controller on the cpu
+    # and connect it to the mem bus
+    system.cpu.createInterruptController()
+    system.cpu.interrupts[0].pio = system.membus.master
+    system.cpu.interrupts[0].int_master = system.membus.slave
+    system.cpu.interrupts[0].int_slave = system.membus.master
+
+    system.system_port = system.membus.slave
+
+    # create a memory controller
+    system.mem_ctrl = MemCtrl()
+    system.mem_ctrl.dram = DDR3_1600_8x8()
+    system.mem_ctrl.dram.range = system.mem_ranges[0]
+    system.mem_ctrl.port = system.membus.master
+
+    # in the syscall emulation mode, we just need to pass the application binary
+    # then give this process to the cpu workload
+    # and finally create the functional exectuion contexts in the CPU
+    process = Process()
+    process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
+    system.cpu.workload = process
+    system.cpu.createThreads()
+
+    # finally we instantiate the system and run the simulation
+    root = Root(full_system=False, system=system)
+
+    m5.instantiate()
+
+    print("Beginning simulation")
+    exit_event = m5.simulate()
+    print("Exiting @ tick {} because {}".format(m5.curTick(), exit_event.getCause()))
+</code></pre>
+
+<h1 id="output-statistics">Output statistics</h1>
+<ul>
+  <li><code class="highlighter-rouge">stats.txt</code> : general statistics about the execution</li>
+  <li><code class="highlighter-rouge">config.ini</code> : information about the system that you simulated</li>
+</ul>

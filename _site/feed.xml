@@ -6,9 +6,45 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Feb 2021 18:47:05 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Feb 2021 18:47:05 +0900</lastBuildDate>
+    <pubDate>Mon, 15 Feb 2021 22:45:26 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Feb 2021 22:45:26 +0900</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
+    
+      <item>
+        <title>3. Gem5 - Creating a very simple SimObject</title>
+        <description>&lt;h1 id=&quot;creating-a-very-simple-simobject&quot;&gt;Creating a Very simple SimObject&lt;/h1&gt; &lt;h2 id=&quot;1-create-a-python-class-for-the-simobject&quot;&gt;1. Create a Python Class for the SimObject&lt;/h2&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem5/src/tutorial/HelloObject.py&lt;/code&gt;&lt;/p&gt; &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;m5.params&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span...</description>
+        <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/gem5/2021/02/15/gem5-3.html</link>
+        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-3.html</guid>
+        
+        
+        <category>Gem5</category>
+        
+      </item>
+    
+      <item>
+        <title>2. Gem5 - Code style</title>
+        <description>&lt;h1 id=&quot;gem5-code-style&quot;&gt;Gem5 Code style&lt;/h1&gt; &lt;h2 id=&quot;naming-conventions&quot;&gt;Naming Conventions&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;class names : Upper CamelCase &lt;code class=&quot;highlighter-rouge&quot;&gt;ClassName&lt;/code&gt;&lt;/li&gt; &lt;li&gt;acronyms : all uppercase &lt;code class=&quot;highlighter-rouge&quot;&gt;CPU&lt;/code&gt;&lt;/li&gt; &lt;li&gt;class members (methods, variables) : lower CamelCase &lt;code class=&quot;highlighter-rouge&quot;&gt;aMemberVariable&lt;/code&gt;&lt;/li&gt;...</description>
+        <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/gem5/2021/02/15/gem5-2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-2.html</guid>
+        
+        
+        <category>Gem5</category>
+        
+      </item>
+    
+      <item>
+        <title>1. Gem5 simulator - quick start</title>
+        <description>&lt;h1 id=&quot;gem5-simulator&quot;&gt;Gem5 simulator&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;references : https://www.gem5.org/documentation&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;what-is-gem5&quot;&gt;what is Gem5?&lt;/h2&gt; &lt;p&gt;gem5 is a modular discrete event driven computer system simulator platform. That means that:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;gem5’s components can...</description>
+        <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/gem5/2021/02/15/gem5-1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-1.html</guid>
+        
+        
+        <category>Gem5</category>
+        
+      </item>
     
       <item>
         <title>Container Part 3</title>
