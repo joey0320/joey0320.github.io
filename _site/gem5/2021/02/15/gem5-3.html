@@ -183,43 +183,43 @@
 <h2 id="2-implement-the-simobject-in-c">2. Implement the SimObject in C++</h2>
 <p><code class="highlighter-rouge">gem5/src/tutorial/hello_object.hh</code></p>
 
-<pre><code class="language-C++">#ifndef __TUTORIAL_GEM5_HELLO_OBJECT__
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef __TUTORIAL_GEM5_HELLO_OBJECT__
 #define __TUTORIAL_GEM5_HELLO_OBJECT__
-
-#include "params/HelloObject.hh"
+</span>
+<span class="cp">#include "params/HelloObject.hh"
 #include "sim/sim_object.hh"
+</span>
+<span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span> <span class="p">{</span>
+    <span class="nl">public:</span>
+       <span class="c1">// constructor of a SimObject takes a parameter object</span>
+       <span class="c1">// which is autmatically created by the build system</span>
+       <span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
+<span class="p">};</span>
 
-class HelloObject : public SimObject {
-    public:
-       // constructor of a SimObject takes a parameter object
-       // which is autmatically created by the build system
-       HelloObject(HelloObjectParams *p);
-};
-
-#endif
-</code></pre>
+<span class="cp">#endif
+</span></code></pre></div></div>
 
 <p><code class="highlighter-rouge">gem5/src/tutorial/hello_object.hh</code></p>
 
-<pre><code class="language-C++">#include "tutorial/hello_object.hh"
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "tutorial/hello_object.hh"
 #include &lt;iostream&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-using namespace std;
+<span class="c1">// constructor : pass the parameter object to SimObject</span>
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"hello world from simobject"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
 
-// constructor : pass the parameter object to SimObject
-HelloObject::HelloObject(HelloObjectParams *params):
-    SimObject(params)
-{
-    cout &lt;&lt; "hello world from simobject" &lt;&lt; endl;
-}
-
-// implement for the parameter type
-// implicitly created from the SimObject Python declaration, namely, the create function
-// returns a new instantiation of the SimObject
-HelloObject* HelloObjectParams::create() {
-    return new HelloObject(this);
-}
-</code></pre>
+<span class="c1">// implement for the parameter type</span>
+<span class="c1">// implicitly created from the SimObject Python declaration, namely, the create function</span>
+<span class="c1">// returns a new instantiation of the SimObject</span>
+<span class="n">HelloObject</span><span class="o">*</span> <span class="n">HelloObjectParams</span><span class="o">::</span><span class="n">create</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">HelloObject</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h2 id="3-register-the-files">3. Register the files</h2>
 

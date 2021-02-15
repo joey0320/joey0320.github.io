@@ -6,9 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Scratch Pad</title>
-  <meta name="description" content="somewhere I can write stuff
-">
+  <title>5. Gem5 - Event Driven Programming</title>
+  <meta name="description" content="Event Driven Programming">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -42,11 +41,10 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="somewhere I can write stuff
-" />
-  <meta property="og:url" content="http://localhost:4000/index.html">
+  <meta property="og:description" content="Event Driven Programming" />
+  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/15/gem5-5.html">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="Scratch Pad" />
+  <meta property="og:title" content="5. Gem5 - Event Driven Programming" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -57,18 +55,17 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Scratch Pad">
-  <meta name="twitter:description" content="somewhere I can write stuff
-">
+  <meta name="twitter:title" content="5. Gem5 - Event Driven Programming">
+  <meta name="twitter:description" content="Event Driven Programming">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/index.html">
+  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/15/gem5-5.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/15/gem5-5.html">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -133,150 +130,65 @@
 
 
     <div class="page-content">
-        <div class="home">
+        <div class="post">
 
-<div class="site-header-container has-cover" style="background-image: url(/assets/header_image.jpg);">
-  <div class="scrim has-cover">
-    <header class="site-header">
-      <h1 class="title">Scratch Pad</h1>
-      <p class="subtitle">feel free to use!</p>
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">5. Gem5 - Event Driven Programming</h1>
+      <p class="info">by <strong>Joonho Hwangbo</strong></p>
     </header>
   </div>
 </div>
 
 <div class="wrapper">
-<ul class="post-list">
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-2.html">2. Gem5 - Code style</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Gem5 Code style Naming Conventions class names : Upper CamelCase ClassName acronyms : all uppercase CPU class members (methods, variables) : lower CamelCase aMemberVariable local variables : underscore local_variable File structure never contain using namespace ... header files Documentation Doxygen style ``` /** This is the brief description. This is...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-1.html">1. Gem5 simulator - quick start</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Gem5 simulator references : https://www.gem5.org/documentation what is Gem5? gem5 is a modular discrete event driven computer system simulator platform. That means that: gem5’s components can be rearranged, parameterized, extended or replaced easily to suit your needs. It simulates the passing of time as a series of discrete events. Its intended...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-5.html">5. Gem5 - Event Driven Programming</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Event Driven Programming
-</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-4.html">4. Gem5 - Debugging</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Setting Debug Flags Some examples debugging dram build/X86/gem5.opt --debug-flags=DRAM configs/learning_gem5/part1/simple.py | head -n 50 debugging cpu instruction build/X86/gem5.opt --debug-flags=Exec configs/learning_gem5/part1/simple.py | head -n 50 for more debugging info build/X86/gem5.opt --debug-help Setting Debugging Flags add a debug flag to gem5/src/tutorial/SConscript DebugFlag('Hello') By declaring the flag in the SConscript file, a debug...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-3.html">3. Gem5 - Creating a very simple SimObject</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Creating a Very simple SimObject 1. Create a Python Class for the SimObject gem5/src/tutorial/HelloObject.py from m5.params import * from m5.SimObject import SimObject # python wrapper for the C++ implementation of the SimObject class HelloObject(SimObject): # convention to have same name with class # type is the C++ class that you...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  
-</ul>
 
-<nav class="pagination" role="navigation">
-	<p>
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">February 15, 2021</div>
+  <div class="post-categories">
+  in 
     
-		<span class="fa-stack fa-lg">
-      <i class="fa fa-square fa-stack-2x"></i>
-      <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
-    </span>
-		
-		<span class="page-number">Page 1 of 2</span>
-		
-		<a class="newer-posts" href="/page/2/">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-square fa-stack-2x"></i>
-        <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-		
-	</p>
-</nav>
+    <a href="/category/Gem5">Gem5</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h1 id="event-driven-programming">Event Driven Programming</h1>
+
+</article>
+
+
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
 
 </div>
 </div>

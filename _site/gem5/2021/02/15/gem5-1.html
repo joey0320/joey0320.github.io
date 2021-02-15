@@ -194,9 +194,11 @@
   <li>to run in user mode</li>
 </ul>
 
-<p><code class="highlighter-rouge">export UID=$(id -u)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export UID=$(id -u)
+</code></pre></div></div>
 
-<p><code class="highlighter-rouge">export GID=$(id -g)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export GID=$(id -g)
+</code></pre></div></div>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it \
 	-u $UID:$GID \
@@ -213,8 +215,9 @@
   </li>
   <li>
     <p>Now the environment for building and running Gem5 is all set!!!</p>
-  </li>
-  <li><code class="highlighter-rouge">scons build/&lt;ISA&gt;/gem5.opt -j20</code>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> scons build/&lt;ISA&gt;/gem5.opt -j20
+</code></pre></div>    </div>
     <ul>
       <li>
         <ISA> should be the ISA that you want to build and run
@@ -223,7 +226,8 @@
       <li>e.g. <code class="highlighter-rouge">scons build/X86/gem5.opt -j20</code></li>
     </ul>
   </li>
-  <li>output binary types
+  <li>
+    <p>output binary types</p>
     <ul>
       <li><code class="highlighter-rouge">opt</code> : debugging and most optimizations (just use this …)</li>
       <li><code class="highlighter-rouge">debug</code> : no optimizations and debug symbols</li>
@@ -322,7 +326,8 @@
   <li>the Cache Object is implemented in the src/mem/cache/Cache.py</li>
 </ul>
 
-<p><code class="highlighter-rouge">tutorial/caches.py</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tutorial/caches.py
+</code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
 <span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="n">Cache</span>
