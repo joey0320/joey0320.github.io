@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Container Part 2</title>
-  <meta name="description" content="Container Part 2">
+  <title>7. Gem5 - Even More Event Driven Programming</title>
+  <meta name="description" content="Adding parameters to SimObjects and More Events">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -41,10 +41,10 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Container Part 2" />
-  <meta property="og:url" content="http://localhost:4000/container/2021/02/05/container2.html">
+  <meta property="og:description" content="Adding parameters to SimObjects and More Events" />
+  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/16/gem5-7.html">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="Container Part 2" />
+  <meta property="og:title" content="7. Gem5 - Even More Event Driven Programming" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -55,17 +55,17 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Container Part 2">
-  <meta name="twitter:description" content="Container Part 2">
+  <meta name="twitter:title" content="7. Gem5 - Even More Event Driven Programming">
+  <meta name="twitter:description" content="Adding parameters to SimObjects and More Events">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/container/2021/02/05/container2.html">
+  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/16/gem5-7.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/container/2021/02/05/container2.html">
+  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/16/gem5-7.html">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -137,7 +137,7 @@
 <div class="post-header-container " >
   <div class="scrim ">
     <header class="post-header">
-      <h1 class="title">Container Part 2</h1>
+      <h1 class="title">7. Gem5 - Even More Event Driven Programming</h1>
       <p class="info">by <strong>Joonho Hwangbo</strong></p>
     </header>
   </div>
@@ -152,75 +152,67 @@
  
 
 <section class="post-meta">
-  <div class="post-date">February 5, 2021</div>
+  <div class="post-date">February 16, 2021</div>
   <div class="post-categories">
   in 
     
-    <a href="/category/Container">Container</a>
+    <a href="/category/Gem5">Gem5</a>
     
   
   </div>
 </section>
 
 <article class="post-content">
-  <h1 id="container-part-2">Container Part 2</h1>
-<p><img src="/assets/docker_logo.png" alt="Docker" /></p>
+  <h1 id="adding-parameters-to-simobjects-and-more-events">Adding parameters to SimObjects and More Events</h1>
 
-<h2 id="container-internals">Container Internals</h2>
-<p><img src="/assets/DockerInternals.png" alt="Docker Internals" /></p>
-
-<h2 id="1-client-sends-a-request">1. client sends a request</h2>
 <ul>
-  <li>Uses REST API</li>
+  <li>Gem5 can pass parameters from python objects to C++ objects</li>
 </ul>
 
-<h2 id="2-docker-daemon">2. Docker Daemon</h2>
+<h2 id="1-adding-params">1. adding params</h2>
+
 <ul>
-  <li>gets the request and figures out what the request is by using a routing table</li>
-  <li>then pulls the image if the images is not in a local image repo</li>
-  <li>converts the image into a OCI bundle</li>
-  <li>responsible for
-    <ul>
-      <li>image management,</li>
-      <li>image builds</li>
-      <li>authentication</li>
-      <li>security</li>
-      <li>networking : when started, creates a default network bridge (docker0)</li>
-      <li>orchestration</li>
-    </ul>
-  </li>
+  <li>add these lines of code to <code class="highlighter-rouge">HelloObject.py</code></li>
 </ul>
 
-<h2 id="3-containerd">3. Containerd</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># adding parameters
+# they will be passed to the C++ object
+# Param.&lt;TypeName&gt;(default_value, "description")
+# Many other convenience parameters (e.g. Percent, Cycles, MemorySize)
+</span><span class="n">time_to_wait</span> <span class="o">=</span> <span class="n">Param</span><span class="o">.</span><span class="n">Latency</span><span class="p">(</span><span class="s">"Time before firing the event"</span><span class="p">)</span>
+<span class="n">number_of_fires</span> <span class="o">=</span> <span class="n">Param</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"Number of times to fire the event before goodbye"</span><span class="p">)</span>
+</code></pre></div></div>
 <ul>
-  <li>interacts with the daemon with gRPC (CRUD style API)</li>
-  <li>responsible for
-    <ul>
-      <li>container life cycle</li>
-      <li>execution logic of containers</li>
-    </ul>
-  </li>
+  <li>add these lines of code to <code class="highlighter-rouge">hello_object.hh</code></li>
 </ul>
 
-<h2 id="4-runc">4. runc</h2>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">myName</span><span class="p">;</span>
+</code></pre></div></div>
+
 <ul>
-  <li>cli that wraps around libcontainer</li>
-  <li>interacts with the kernel to build the container
-    <ul>
-      <li>creates namespaces, cgroups</li>
-    </ul>
-  </li>
+  <li>add these lines of code to <code class="highlighter-rouge">hello_object.cc</code>
+ <code class="highlighter-rouge">HelloObject:HelloObject(HelloObjectParams *params)</code></li>
 </ul>
 
-<h2 id="5-shim">5. shim</h2>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myName</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">),</span>
+<span class="n">latency</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">time_to_wait</span><span class="p">),</span>
+<span class="n">timesLeft</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">number_of_fires</span><span class="p">)</span>
+</code></pre></div></div>
+
 <ul>
-  <li>detaches the runc from containerd????</li>
+  <li><code class="highlighter-rouge">run_hello.py</code> should be modified since time_to_wait does not have any
+default value</li>
 </ul>
 
-<h2 id="6-container">6. container</h2>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="p">.</span><span class="n">hello</span> <span class="o">=</span> <span class="n">HelloObject</span><span class="p">(</span><span class="n">time_to_wait</span><span class="o">=</span><span class="err">'</span><span class="mx">2us</span><span class="err">'</span><span class="p">)</span>
+<span class="cp"># or we can just specify the time_to_wait as a member variable
+# root.hello.time_to_wait = '2us'
+</span>
+<span class="n">root</span><span class="p">.</span><span class="n">hello</span><span class="p">.</span><span class="n">number_of_fires</span> <span class="o">=</span> <span class="mi">10</span>
+</code></pre></div></div>
+
 <ul>
-  <li>child process of runc</li>
-  <li>that is why containers have unique namespaces !! they are forks!!</li>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
 </ul>
 
 </article>

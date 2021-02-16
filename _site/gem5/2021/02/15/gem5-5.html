@@ -122,6 +122,8 @@
 
 	
 
+	
+
 
       </ul>
     </nav>
@@ -162,6 +164,87 @@
 
 <article class="post-content">
   <h1 id="event-driven-programming">Event Driven Programming</h1>
+
+<h2 id="1-creating-a-event-callback">1. Creating a event Callback</h2>
+
+<ul>
+  <li>
+    <p>In gem5’s event-driven model, each event has a callback function in which the event is processed. Generally, this is a class that inherits from :cppEvent. However, gem5 provides a wrapper function for creating simple events.</p>
+  </li>
+  <li>
+    <p>declare event functions in <code class="highlighter-rouge">hello_object.hh</code> file</p>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span>
+<span class="p">{</span>
+  <span class="nl">private:</span>
+    <span class="c1">// executed every time a event fires</span>
+    <span class="c1">// must take no parameters and return nothing</span>
+    <span class="kt">void</span> <span class="n">processEvent</span><span class="p">();</span>
+
+    <span class="c1">// add an event instance</span>
+    <span class="c1">// use EventFunctionWrapper</span>
+    <span class="c1">// enables us to execute any function</span>
+    <span class="n">EventFunctionWrapper</span> <span class="n">event</span><span class="p">;</span>
+
+  <span class="nl">public:</span>
+    <span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
+
+    <span class="c1">// added</span>
+    <span class="kt">void</span> <span class="n">startup</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<ul>
+  <li>construct event in the constructor <code class="highlighter-rouge">hello_object.cc</code></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// EvenFunctionWrapper takes two arguments</span>
+<span class="c1">// 1. a function to execute </span>
+<span class="c1">// type of std::function&lt;void(void)&gt; (e.g. lambda functions)</span>
+<span class="c1">// 2. name</span>
+
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span> <span class="o">:</span>
+    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">event</span><span class="p">([</span><span class="k">this</span><span class="p">]{</span><span class="n">processEvent</span><span class="p">();},</span> <span class="n">name</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Created the hello object</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>implement the process function</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span>
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">processEvent</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Hello world! Processing the event!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="2-scheduling-events">2. Scheduling Events</h2>
+
+<ul>
+  <li>
+    <p>Finally, for the event to be processed, we first have to schedule the event. For this we use the :cppschedule function. This function schedules some instance of an Event for some time in the future (event-driven simulation does not allow events to execute in the past).</p>
+  </li>
+  <li>
+    <p>We will initially schedule the event in the startup() function we added to the HelloObject class. The startup() function is where SimObjects are allowed to schedule internal events. It does not get executed until the simulation begins for the first time (i.e. the simulate() function is called from a Python config file).</p>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span>
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">startup</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
+</ul>
+
 
 </article>
 
@@ -224,6 +307,8 @@
 
 	
 	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
 	
 
 	

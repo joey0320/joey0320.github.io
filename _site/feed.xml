@@ -6,14 +6,49 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 Feb 2021 01:49:50 +0900</pubDate>
-    <lastBuildDate>Tue, 16 Feb 2021 01:49:50 +0900</lastBuildDate>
+    <pubDate>Tue, 16 Feb 2021 14:01:46 +0900</pubDate>
+    <lastBuildDate>Tue, 16 Feb 2021 14:01:46 +0900</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
+        <title>8. Gem5 - Final Event Driven Programming</title>
+        <description>&lt;h1 id=&quot;adding-simobjects-as-parameters&quot;&gt;Adding SimObjects as Parameters&lt;/h1&gt; &lt;h2 id=&quot;other-simobjects-as-parameters&quot;&gt;Other SimObjects as Parameters&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;You can also specify other SimObjects as parameters&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;implementation&quot;&gt;Implementation&lt;/h2&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;we will create a &lt;code class=&quot;highlighter-rouge&quot;&gt;GoodbyeObject&lt;/code&gt;...</description>
+        <pubDate>Tue, 16 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/gem5/2021/02/16/gem5-8.html</link>
+        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/16/gem5-8.html</guid>
+        
+        
+        <category>Gem5</category>
+        
+      </item>
+    
+      <item>
+        <title>7. Gem5 - Even More Event Driven Programming</title>
+        <description>&lt;h1 id=&quot;adding-parameters-to-simobjects-and-more-events&quot;&gt;Adding parameters to SimObjects and More Events&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;Gem5 can pass parameters from python objects to C++ objects&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;1-adding-params&quot;&gt;1. adding params&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;add these lines of code...</description>
+        <pubDate>Tue, 16 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/gem5/2021/02/16/gem5-7.html</link>
+        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/16/gem5-7.html</guid>
+        
+        
+        <category>Gem5</category>
+        
+      </item>
+    
+      <item>
+        <title>6. Gem5 - Some More Event Driven Programming</title>
+        <description>&lt;h1 id=&quot;some-more-event-driven-programming&quot;&gt;Some More Event Driven Programming&lt;/h1&gt; &lt;h2 id=&quot;1-more-event-scheduling&quot;&gt;1. More Event Scheduling&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;We can also schedule new events within an event process action.&lt;/li&gt; &lt;li&gt; &lt;p&gt;For instance, we are going to...</description>
+        <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
+        <link>http://localhost:4000/gem5/2021/02/15/gem5-6.html</link>
+        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-6.html</guid>
+        
+        
+        <category>Gem5</category>
+        
+      </item>
+    
+      <item>
         <title>5. Gem5 - Event Driven Programming</title>
-        <description>&lt;h1 id=&quot;event-driven-programming&quot;&gt;Event Driven Programming&lt;/h1&gt;
-</description>
+        <description>&lt;h1 id=&quot;event-driven-programming&quot;&gt;Event Driven Programming&lt;/h1&gt; &lt;h2 id=&quot;1-creating-a-event-callback&quot;&gt;1. Creating a event Callback&lt;/h2&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;In gem5’s event-driven model, each event has a callback function in which the event is processed. Generally, this...</description>
         <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
         <link>http://localhost:4000/gem5/2021/02/15/gem5-5.html</link>
         <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-5.html</guid>
@@ -61,7 +96,7 @@
     
       <item>
         <title>1. Gem5 simulator - quick start</title>
-        <description>&lt;h1 id=&quot;gem5-simulator&quot;&gt;Gem5 simulator&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;references : https://www.gem5.org/documentation&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;what-is-gem5&quot;&gt;what is Gem5?&lt;/h2&gt; &lt;p&gt;gem5 is a modular discrete event driven computer system simulator platform. That means that:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;gem5’s components can...</description>
+        <description>&lt;h1 id=&quot;gem5-simulator&quot;&gt;Gem5 simulator&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;references : &lt;a href=&quot;https://www.gem5.org/documentation&quot;&gt;gem5.org&lt;/a&gt;&lt;/li&gt; &lt;li&gt;copy of gem5.org&lt;/li&gt; &lt;li&gt;just for studying gem5&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;what-is-gem5&quot;&gt;what is Gem5?&lt;/h2&gt; &lt;p&gt;gem5 is a modular discrete event driven computer system simulator...</description>
         <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
         <link>http://localhost:4000/gem5/2021/02/15/gem5-1.html</link>
         <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-1.html</guid>
@@ -89,18 +124,6 @@
         <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
         <link>http://localhost:4000/container/2021/02/05/container2.html</link>
         <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container2.html</guid>
-        
-        
-        <category>Container</category>
-        
-      </item>
-    
-      <item>
-        <title>Container Part 1</title>
-        <description>&lt;h1 id=&quot;container-part-1---container-basics&quot;&gt;Container Part 1 - Container basics&lt;/h1&gt; &lt;p&gt;&lt;img src=&quot;/assets/docker_logo.png&quot; alt=&quot;Docker&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;1-what-is-a-container&quot;&gt;1. What is a container&lt;/h2&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;container is a standard unit of software that packages up code...</description>
-        <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/container/2021/02/05/container1.html</link>
-        <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container1.html</guid>
         
         
         <category>Container</category>

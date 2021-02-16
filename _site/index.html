@@ -125,6 +125,8 @@
 
 	
 
+	
+
 
       </ul>
     </nav>
@@ -146,6 +148,50 @@
 
 <div class="wrapper">
 <ul class="post-list">
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/gem5/2021/02/16/gem5-8.html">8. Gem5 - Final Event Driven Programming</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Adding SimObjects as Parameters Other SimObjects as Parameters You can also specify other SimObjects as parameters Implementation we will create a GoodbyeObject and pass it to HelloObject add to HelloObject.py since GoodbyeObject is similar to HelloObject class GoodbyeObject(SimObject): type='GoodbyeObject' cxx_header='tutorial/goodbye_object.hh' bandwidth = Param.MemoryBandwidth('100MB/s', "BW to fill the buffer") buffer_size =...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">February 16, 2021</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/Gem5">Gem5</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/gem5/2021/02/16/gem5-7.html">7. Gem5 - Even More Event Driven Programming</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Adding parameters to SimObjects and More Events Gem5 can pass parameters from python objects to C++ objects 1. adding params add these lines of code to HelloObject.py # adding parameters # they will be passed to the C++ object # Param.&lt;TypeName&gt;(default_value, "description") # Many other convenience parameters (e.g. Percent, Cycles,...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">February 16, 2021</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/Gem5">Gem5</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
   
   <li>
     <h2>
@@ -174,52 +220,7 @@
       <a class="post-link" href="/gem5/2021/02/15/gem5-1.html">1. Gem5 simulator - quick start</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
-      <p>Gem5 simulator references : https://www.gem5.org/documentation what is Gem5? gem5 is a modular discrete event driven computer system simulator platform. That means that: gem5’s components can be rearranged, parameterized, extended or replaced easily to suit your needs. It simulates the passing of time as a series of discrete events. Its intended...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-5.html">5. Gem5 - Event Driven Programming</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Event Driven Programming
-</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-4.html">4. Gem5 - Debugging</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Setting Debug Flags Some examples debugging dram build/X86/gem5.opt --debug-flags=DRAM configs/learning_gem5/part1/simple.py | head -n 50 debugging cpu instruction build/X86/gem5.opt --debug-flags=Exec configs/learning_gem5/part1/simple.py | head -n 50 for more debugging info build/X86/gem5.opt --debug-help Setting Debugging Flags add a debug flag to gem5/src/tutorial/SConscript DebugFlag('Hello') By declaring the flag in the SConscript file, a debug...</p>
+      <p>Gem5 simulator references : gem5.org copy of gem5.org just for studying gem5 what is Gem5? gem5 is a modular discrete event driven computer system simulator platform. That means that: gem5’s components can be rearranged, parameterized, extended or replaced easily to suit your needs. It simulates the passing of time as...</p>
     </section>
     <section class="post-meta">
       <div class="post-date">February 15, 2021</div>
@@ -266,7 +267,7 @@
       <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
     </span>
 		
-		<span class="page-number">Page 1 of 2</span>
+		<span class="page-number">Page 1 of 3</span>
 		
 		<a class="newer-posts" href="/page/2/">
       <span class="fa-stack fa-lg">
@@ -312,6 +313,8 @@
 
 	
 	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
 	
 
 	

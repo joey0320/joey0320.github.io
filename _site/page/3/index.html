@@ -6,8 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Container Part 2</title>
-  <meta name="description" content="Container Part 2">
+  <title>Scratch Pad - page 3</title>
+  <meta name="description" content="somewhere I can write stuff
+">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -41,10 +42,11 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Container Part 2" />
-  <meta property="og:url" content="http://localhost:4000/container/2021/02/05/container2.html">
+  <meta property="og:description" content="somewhere I can write stuff
+" />
+  <meta property="og:url" content="http://localhost:4000/page/3/index.html">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="Container Part 2" />
+  <meta property="og:title" content="Scratch Pad - page 3" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -55,17 +57,18 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Container Part 2">
-  <meta name="twitter:description" content="Container Part 2">
+  <meta name="twitter:title" content="Scratch Pad - page 3">
+  <meta name="twitter:description" content="somewhere I can write stuff
+">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/container/2021/02/05/container2.html">
+  <meta name="twitter:url" content="http://localhost:4000/page/3/index.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/container/2021/02/05/container2.html">
+  <link rel="canonical" href="http://localhost:4000/page/3/">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -132,123 +135,63 @@
 
 
     <div class="page-content">
-        <div class="post">
+        <div class="home">
 
-<div class="post-header-container " >
-  <div class="scrim ">
-    <header class="post-header">
-      <h1 class="title">Container Part 2</h1>
-      <p class="info">by <strong>Joonho Hwangbo</strong></p>
+<div class="site-header-container has-cover" style="background-image: url(/assets/header_image.jpg);">
+  <div class="scrim has-cover">
+    <header class="site-header">
+      <h1 class="title">Scratch Pad</h1>
+      <p class="subtitle">feel free to use!</p>
     </header>
   </div>
 </div>
 
 <div class="wrapper">
-
- <span class="page-divider">
-  <span class="one"></span>
-  <span class="two"></span>
-</span>
- 
-
-<section class="post-meta">
-  <div class="post-date">February 5, 2021</div>
-  <div class="post-categories">
-  in 
-    
-    <a href="/category/Container">Container</a>
-    
+<ul class="post-list">
   
-  </div>
-</section>
-
-<article class="post-content">
-  <h1 id="container-part-2">Container Part 2</h1>
-<p><img src="/assets/docker_logo.png" alt="Docker" /></p>
-
-<h2 id="container-internals">Container Internals</h2>
-<p><img src="/assets/DockerInternals.png" alt="Docker Internals" /></p>
-
-<h2 id="1-client-sends-a-request">1. client sends a request</h2>
-<ul>
-  <li>Uses REST API</li>
-</ul>
-
-<h2 id="2-docker-daemon">2. Docker Daemon</h2>
-<ul>
-  <li>gets the request and figures out what the request is by using a routing table</li>
-  <li>then pulls the image if the images is not in a local image repo</li>
-  <li>converts the image into a OCI bundle</li>
-  <li>responsible for
-    <ul>
-      <li>image management,</li>
-      <li>image builds</li>
-      <li>authentication</li>
-      <li>security</li>
-      <li>networking : when started, creates a default network bridge (docker0)</li>
-      <li>orchestration</li>
-    </ul>
+  <li>
+    <h2>
+      <a class="post-link" href="/container/2021/02/05/container2.html">Container Part 2</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Container Part 2 Container Internals 1. client sends a request Uses REST API 2. Docker Daemon gets the request and figures out what the request is by using a routing table then pulls the image if the images is not in a local image repo converts the image into a...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">February 5, 2021</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/Container">Container</a>
+        
+      
+      </div>
+    </section>
   </li>
-</ul>
-
-<h2 id="3-containerd">3. Containerd</h2>
-<ul>
-  <li>interacts with the daemon with gRPC (CRUD style API)</li>
-  <li>responsible for
-    <ul>
-      <li>container life cycle</li>
-      <li>execution logic of containers</li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="4-runc">4. runc</h2>
-<ul>
-  <li>cli that wraps around libcontainer</li>
-  <li>interacts with the kernel to build the container
-    <ul>
-      <li>creates namespaces, cgroups</li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="5-shim">5. shim</h2>
-<ul>
-  <li>detaches the runc from containerd????</li>
-</ul>
-
-<h2 id="6-container">6. container</h2>
-<ul>
-  <li>child process of runc</li>
-  <li>that is why containers have unique namespaces !! they are forks!!</li>
-</ul>
-
-</article>
-
-
-
-
-
-<section class="rss">
-  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
-</section>
-
-<section class="share">
-  <span>Share: </span>
   
-    
-    
-    
-    
-    
-    
-    
-    
   
-</section>
+</ul>
 
-
-
+<nav class="pagination" role="navigation">
+	<p>
+    
+			
+			<a class="newer-posts" href="">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-square fa-stack-2x"></i>
+					<i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+				</span>
+			</a>
+			
+		
+		<span class="page-number">Page 3 of 3</span>
+		
+		<span class="fa-stack fa-lg">
+      <i class="fa fa-square fa-stack-2x"></i>
+      <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+    </span>
+		
+	</p>
+</nav>
 
 </div>
 </div>

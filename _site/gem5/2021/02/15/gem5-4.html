@@ -122,6 +122,8 @@
 
 	
 
+	
+
 
       </ul>
     </nav>
@@ -189,8 +191,11 @@
     </ul>
   </li>
   <li>add header and debug msg to <code class="highlighter-rouge">hello_object.cc</code>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="cp">#include "debug/Hello.hh"
+</span> <span class="cp">#include "base/logging.hh"
+</span> <span class="cp">#include "base/trace.hh"
+</span></code></pre></div>    </div>
     <ul>
-      <li><code class="highlighter-rouge">#include "debug/Hello.hh"</code></li>
       <li><code class="highlighter-rouge">DPRINTF(Hello, "Created the hello object\n");
 </code></li>
     </ul>
@@ -207,6 +212,10 @@
 </ul>
 
 <p>You can control where the debug output goes with the –debug-file parameter. By default, all of the debugging output is printed to stdout. However, you can redirect the output to any file. The file is stored relative to the main gem5 output directory, not the current working directory.</p>
+
+<ul>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
+</ul>
 
 </article>
 
@@ -269,6 +278,8 @@
 
 	
 	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
 	
 
 	
