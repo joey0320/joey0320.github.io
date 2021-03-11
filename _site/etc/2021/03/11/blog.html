@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>5. Gem5 - Event Driven Programming</title>
-  <meta name="description" content="Event Driven Programming">
+  <title>Blog Editing</title>
+  <meta name="description" content="1. adding post &amp; category  copy a post in _posts  modifying category inside the post automatically generates a new category  use markdown to write post!!">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -41,10 +41,10 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Event Driven Programming" />
-  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/15/gem5-5.html">
+  <meta property="og:description" content="1. adding post &amp; category  copy a post in _posts  modifying category inside the post automatically generates a new category  use markdown to write post!!" />
+  <meta property="og:url" content="http://localhost:4000/etc/2021/03/11/blog.html">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="5. Gem5 - Event Driven Programming" />
+  <meta property="og:title" content="Blog Editing" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -55,17 +55,17 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="5. Gem5 - Event Driven Programming">
-  <meta name="twitter:description" content="Event Driven Programming">
+  <meta name="twitter:title" content="Blog Editing">
+  <meta name="twitter:description" content="1. adding post &amp; category  copy a post in _posts  modifying category inside the post automatically generates a new category  use markdown to write post!!">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/15/gem5-5.html">
+  <meta name="twitter:url" content="http://localhost:4000/etc/2021/03/11/blog.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/15/gem5-5.html">
+  <link rel="canonical" href="http://localhost:4000/etc/2021/03/11/blog.html">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -141,7 +141,7 @@
 <div class="post-header-container " >
   <div class="scrim ">
     <header class="post-header">
-      <h1 class="title">5. Gem5 - Event Driven Programming</h1>
+      <h1 class="title">Blog Editing</h1>
       <p class="info">by <strong>Joonho Hwangbo</strong></p>
     </header>
   </div>
@@ -156,99 +156,29 @@
  
 
 <section class="post-meta">
-  <div class="post-date">February 15, 2021</div>
+  <div class="post-date">March 11, 2021</div>
   <div class="post-categories">
   in 
     
-    <a href="/category/Gem5">Gem5</a>
+    <a href="/category/Etc">Etc</a>
     
   
   </div>
 </section>
 
 <article class="post-content">
-  <h1 id="event-driven-programming">Event Driven Programming</h1>
-
-<h2 id="1-creating-a-event-callback">1. Creating a event Callback</h2>
-
+  <h1 id="1-adding-post--category">1. adding post &amp; category</h1>
 <ul>
-  <li>
-    <p>In gem5’s event-driven model, each event has a callback function in which the event is processed. Generally, this is a class that inherits from :cppEvent. However, gem5 provides a wrapper function for creating simple events.</p>
-  </li>
-  <li>
-    <p>declare event functions in <code class="highlighter-rouge">hello_object.hh</code> file</p>
-  </li>
+  <li>copy a post in <code class="highlighter-rouge">_posts</code></li>
+  <li>modifying category inside the post automatically generates a new category</li>
+  <li>use markdown to write post!!</li>
 </ul>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span>
-<span class="p">{</span>
-  <span class="nl">private:</span>
-    <span class="c1">// executed every time a event fires</span>
-    <span class="c1">// must take no parameters and return nothing</span>
-    <span class="kt">void</span> <span class="n">processEvent</span><span class="p">();</span>
-
-    <span class="c1">// add an event instance</span>
-    <span class="c1">// use EventFunctionWrapper</span>
-    <span class="c1">// enables us to execute any function</span>
-    <span class="n">EventFunctionWrapper</span> <span class="n">event</span><span class="p">;</span>
-
-  <span class="nl">public:</span>
-    <span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
-
-    <span class="c1">// added</span>
-    <span class="kt">void</span> <span class="n">startup</span><span class="p">();</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
+<h1 id="2-modifying-date">2. modifying date</h1>
 <ul>
-  <li>construct event in the constructor <code class="highlighter-rouge">hello_object.cc</code></li>
+  <li>kind of weird ??</li>
+  <li>just deleting the date section adds the current date - 1</li>
 </ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// EvenFunctionWrapper takes two arguments</span>
-<span class="c1">// 1. a function to execute </span>
-<span class="c1">// type of std::function&lt;void(void)&gt; (e.g. lambda functions)</span>
-<span class="c1">// 2. name</span>
-
-<span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span> <span class="o">:</span>
-    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">event</span><span class="p">([</span><span class="k">this</span><span class="p">]{</span><span class="n">processEvent</span><span class="p">();},</span> <span class="n">name</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Created the hello object</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>implement the process function</li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span>
-<span class="n">HelloObject</span><span class="o">::</span><span class="n">processEvent</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Hello world! Processing the event!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="2-scheduling-events">2. Scheduling Events</h2>
-
-<ul>
-  <li>
-    <p>Finally, for the event to be processed, we first have to schedule the event. For this we use the :cppschedule function. This function schedules some instance of an Event for some time in the future (event-driven simulation does not allow events to execute in the past).</p>
-  </li>
-  <li>
-    <p>We will initially schedule the event in the startup() function we added to the HelloObject class. The startup() function is where SimObjects are allowed to schedule internal events. It does not get executed until the simulation begins for the first time (i.e. the simulate() function is called from a Python config file).</p>
-  </li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span>
-<span class="n">HelloObject</span><span class="o">::</span><span class="n">startup</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="mi">100</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
-</ul>
-
 
 </article>
 

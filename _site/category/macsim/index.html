@@ -6,8 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>6. Gem5 - Some More Event Driven Programming</title>
-  <meta name="description" content="Some More Event Driven Programming">
+  <title>Macsim</title>
+  <meta name="description" content="somewhere I can write stuff
+">
   
   <meta name="author" content="Joonho Hwangbo">
   <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
@@ -41,10 +42,11 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Some More Event Driven Programming" />
-  <meta property="og:url" content="http://localhost:4000/gem5/2021/02/15/gem5-6.html">
+  <meta property="og:description" content="somewhere I can write stuff
+" />
+  <meta property="og:url" content="http://localhost:4000/category/macsim/">
   <meta property="og:site_name" content="Scratch Pad" />
-  <meta property="og:title" content="6. Gem5 - Some More Event Driven Programming" />
+  <meta property="og:title" content="Macsim" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -55,17 +57,18 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="6. Gem5 - Some More Event Driven Programming">
-  <meta name="twitter:description" content="Some More Event Driven Programming">
+  <meta name="twitter:title" content="Macsim">
+  <meta name="twitter:description" content="somewhere I can write stuff
+">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/gem5/2021/02/15/gem5-6.html">
+  <meta name="twitter:url" content="http://localhost:4000/category/macsim/">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/gem5/2021/02/15/gem5-6.html">
+  <link rel="canonical" href="http://localhost:4000/category/macsim/">
 	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -136,131 +139,30 @@
 
 
     <div class="page-content">
-        <div class="post">
+        <div class="wrapper">
+<div class="page">
 
-<div class="post-header-container " >
-  <div class="scrim ">
-    <header class="post-header">
-      <h1 class="title">6. Gem5 - Some More Event Driven Programming</h1>
-      <p class="info">by <strong>Joonho Hwangbo</strong></p>
-    </header>
-  </div>
-</div>
+  <header class="post-header">
+    <h1 class="post-title">Posts in "Macsim"</h1>
+  </header>
 
-<div class="wrapper">
-
- <span class="page-divider">
+  <span class="page-divider">
   <span class="one"></span>
   <span class="two"></span>
 </span>
- 
-
-<section class="post-meta">
-  <div class="post-date">February 15, 2021</div>
-  <div class="post-categories">
-  in 
-    
-    <a href="/category/Gem5">Gem5</a>
-    
-  
-  </div>
-</section>
-
-<article class="post-content">
-  <h1 id="some-more-event-driven-programming">Some More Event Driven Programming</h1>
-
-<h2 id="1-more-event-scheduling">1. More Event Scheduling</h2>
-<ul>
-  <li>We can also schedule new events within an event process action.</li>
-  <li>
-    <p>For instance, we are going to add a latency parameter to the HelloObject and a parameter for how many times to fire the event</p>
-  </li>
-  <li><code class="highlighter-rouge">src/tutorial/hello_object.hh</code></li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span>
-<span class="p">{</span>
-  <span class="nl">private:</span>
-    <span class="kt">void</span> <span class="n">processEvent</span><span class="p">();</span>
-
-    <span class="n">EventFunctionWrapper</span> <span class="n">event</span><span class="p">;</span>
-
-    <span class="n">Tick</span> <span class="n">latency</span><span class="p">;</span>
-
-    <span class="kt">int</span> <span class="n">timesLeft</span><span class="p">;</span>
-
-  <span class="nl">public:</span>
-    <span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="n">startup</span><span class="p">();</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<ul>
-  <li><code class="highlighter-rouge">src/tutorial/hello_object.cc</code></li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span> <span class="o">:</span>
-    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">event</span><span class="p">([</span><span class="k">this</span><span class="p">]{</span><span class="n">processEvent</span><span class="p">();},</span> <span class="n">name</span><span class="p">()),</span>
-    <span class="n">latency</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">timesLeft</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Created the hello object</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span>
-<span class="n">HelloObject</span><span class="o">::</span><span class="n">startup</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">latency</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span>
-<span class="n">HelloObject</span><span class="o">::</span><span class="n">processEvent</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">timesLeft</span><span class="o">--</span><span class="p">;</span>
-    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Hello world! Processing the event! %d left</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">timesLeft</span><span class="p">);</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">timesLeft</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Done firing!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="n">latency</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
-</ul>
 
 
-</article>
-
-
-
-
-
-<section class="rss">
-  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
-</section>
-
-<section class="share">
-  <span>Share: </span>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-</section>
-
-
-
+  <article class="post-content">
+    <ul class="posts-list">
+      
+      <li><strong><a class="post-link" href="/macsim/2021/03/11/macsim1.html">Blog Editing</a></strong><span class="post-date"> - March 11, 2021</span></li>
+      
+    </ul>
+  </article>
 
 </div>
 </div>
+<br>
 
     </div>
 

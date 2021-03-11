@@ -62,6 +62,8 @@ descriptions:
     desc: "Posts about docker containers"
   - cat: gem5
     desc: "Posts about gem5 simulator"
+  - cat: note
+    desc: "Notes & Lookups"
 
 # Social icons and sharing options
 #

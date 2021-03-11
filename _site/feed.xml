@@ -6,9 +6,33 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 Feb 2021 14:01:46 +0900</pubDate>
-    <lastBuildDate>Tue, 16 Feb 2021 14:01:46 +0900</lastBuildDate>
+    <pubDate>Fri, 12 Mar 2021 02:08:16 +0900</pubDate>
+    <lastBuildDate>Fri, 12 Mar 2021 02:08:16 +0900</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
+    
+      <item>
+        <title>Blog Editing</title>
+        <description>&lt;h1 id=&quot;1-generating-traces&quot;&gt;1. generating traces&lt;/h1&gt; &lt;h2 id=&quot;x86-traces&quot;&gt;x86 traces&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;install pintools &lt;ul&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;export PIN_ROOT=/path/to/pin/dir&lt;/code&gt; where this path can be found by &lt;code class=&quot;highlighter-rouge&quot;&gt;which pin&lt;/code&gt;&lt;/li&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cp libzlib.a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;$PIN_ROOT&lt;/code&gt;&lt;/li&gt;...</description>
+        <pubDate>Thu, 11 Mar 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/macsim/2021/03/11/macsim1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/macsim/2021/03/11/macsim1.html</guid>
+        
+        
+        <category>Macsim</category>
+        
+      </item>
+    
+      <item>
+        <title>Blog Editing</title>
+        <description>&lt;h1 id=&quot;1-adding-post--category&quot;&gt;1. adding post &amp;amp; category&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;copy a post in &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt;&lt;/li&gt; &lt;li&gt;modifying category inside the post automatically generates a new category&lt;/li&gt; &lt;li&gt;use markdown to write post!!&lt;/li&gt; &lt;/ul&gt; &lt;h1...</description>
+        <pubDate>Thu, 11 Mar 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/etc/2021/03/11/blog.html</link>
+        <guid isPermaLink="true">http://localhost:4000/etc/2021/03/11/blog.html</guid>
+        
+        
+        <category>Etc</category>
+        
+      </item>
     
       <item>
         <title>8. Gem5 - Final Event Driven Programming</title>
@@ -103,30 +127,6 @@
         
         
         <category>Gem5</category>
-        
-      </item>
-    
-      <item>
-        <title>Container Part 3</title>
-        <description>&lt;h1 id=&quot;container-part-3&quot;&gt;Container Part 3&lt;/h1&gt; &lt;p&gt;&lt;img src=&quot;/assets/docker_logo.png&quot; alt=&quot;Docker&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;docker-github-repo-structure&quot;&gt;Docker github repo structure&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;docker has many modules (cli, engine, containerd, runc, …)&lt;/li&gt; &lt;li&gt;they have divided the modules into different...</description>
-        <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/container/2021/02/05/container3.html</link>
-        <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container3.html</guid>
-        
-        
-        <category>Container</category>
-        
-      </item>
-    
-      <item>
-        <title>Container Part 2</title>
-        <description>&lt;h1 id=&quot;container-part-2&quot;&gt;Container Part 2&lt;/h1&gt; &lt;p&gt;&lt;img src=&quot;/assets/docker_logo.png&quot; alt=&quot;Docker&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;container-internals&quot;&gt;Container Internals&lt;/h2&gt; &lt;p&gt;&lt;img src=&quot;/assets/DockerInternals.png&quot; alt=&quot;Docker Internals&quot; /&gt;&lt;/p&gt; &lt;h2 id=&quot;1-client-sends-a-request&quot;&gt;1. client sends a request&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;Uses REST API&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;2-docker-daemon&quot;&gt;2. Docker...</description>
-        <pubDate>Fri, 05 Feb 2021 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/container/2021/02/05/container2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/container/2021/02/05/container2.html</guid>
-        
-        
-        <category>Container</category>
         
       </item>
     
