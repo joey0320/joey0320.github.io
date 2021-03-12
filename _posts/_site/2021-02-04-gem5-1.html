@@ -1,6 +1,8 @@
 <h1 id="gem5-simulator">Gem5 simulator</h1>
 <ul>
-  <li>references : https://www.gem5.org/documentation</li>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
+  <li>copy of gem5.org</li>
+  <li>just for studying gem5</li>
 </ul>
 
 <h2 id="what-is-gem5">what is Gem5?</h2>
@@ -31,9 +33,11 @@
   <li>to run in user mode</li>
 </ul>
 
-<p><code class="highlighter-rouge">export UID=$(id -u)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export UID=$(id -u)
+</code></pre></div></div>
 
-<p><code class="highlighter-rouge">export GID=$(id -g)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export GID=$(id -g)
+</code></pre></div></div>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it \
 	-u $UID:$GID \
@@ -50,8 +54,9 @@
   </li>
   <li>
     <p>Now the environment for building and running Gem5 is all set!!!</p>
-  </li>
-  <li><code class="highlighter-rouge">scons build/&lt;ISA&gt;/gem5.opt -j20</code>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> scons build/&lt;ISA&gt;/gem5.opt -j20
+</code></pre></div>    </div>
     <ul>
       <li>
         <ISA> should be the ISA that you want to build and run
@@ -60,7 +65,8 @@
       <li>e.g. <code class="highlighter-rouge">scons build/X86/gem5.opt -j20</code></li>
     </ul>
   </li>
-  <li>output binary types
+  <li>
+    <p>output binary types</p>
     <ul>
       <li><code class="highlighter-rouge">opt</code> : debugging and most optimizations (just use this …)</li>
       <li><code class="highlighter-rouge">debug</code> : no optimizations and debug symbols</li>
@@ -84,71 +90,74 @@
   <li>key point : gem5 objects are built from C++ implementation</li>
 </ul>
 
-<pre><code class="language-python3">import m5
-from m5.objects import *
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-# the system object will be the parent of all other objects
+<span class="c1"># the system object will be the parent of all other objects
 # in the simulated system
-# it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
-system = System()
+# it contains alot of functional information 
+# (e.g. physical memory ranges, root clock domain, kernel ...)
+</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
 
-# set clock domain
-system.clk_domain = SrcClockDomain()
-system.clk_domain.clock = '1GHz'
-system.clk_domain.voltage_domain = VoltageDomain()
+<span class="c1"># set clock domain
+</span><span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span> <span class="o">=</span> <span class="n">SrcClockDomain</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="s">'1GHz'</span>
+<span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">voltage_domain</span> <span class="o">=</span> <span class="n">VoltageDomain</span><span class="p">()</span>
 
-# set memory : memory is usually timing mode
-system.mem_mode = 'timing'
-system.mem_ranges = [AddrRange('512MB')]
+<span class="c1"># set memory : memory is usually timing mode
+</span><span class="n">system</span><span class="o">.</span><span class="n">mem_mode</span> <span class="o">=</span> <span class="s">'timing'</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">AddrRange</span><span class="p">(</span><span class="s">'512MB'</span><span class="p">)]</span>
 
-# set cpu
-system.cpu = TimingSimpleCPU()
+<span class="c1"># set cpu
+</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span> <span class="o">=</span> <span class="n">TimingSimpleCPU</span><span class="p">()</span>
 
-# set systemwide memory bus
-system.membus = SystemXBar()
+<span class="c1"># set systemwide memory bus
+</span><span class="n">system</span><span class="o">.</span><span class="n">membus</span> <span class="o">=</span> <span class="n">SystemXBar</span><span class="p">()</span>
 
-# no cache system
+<span class="c1"># no cache system
 # directly connect caches to the membus
 # memobject1.master = memobject1.slave
 # master sends requeset
 # slave sends the responses
-system.cpu.icache_port = system.membus.slave
-system.cpu.dcache_port = system.membus.slave
+</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
 
-# only required for X86
+<span class="c1"># only required for X86
 # create IO controller on the cpu
 # and connect it to the mem bus
-system.cpu.createInterruptController()
-system.cpu.interrupts[0].pio = system.membus.master
-system.cpu.interrupts[0].int_master = system.membus.slave
-system.cpu.interrupts[0].int_slave = system.membus.master
+</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createInterruptController</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pio</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_master</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_slave</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
 
-system.system_port = system.membus.slave
+<span class="n">system</span><span class="o">.</span><span class="n">system_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
 
-# create a memory controller
-system.mem_ctrl = MemCtrl()
-system.mem_ctrl.dram = DDR3_1600_8x8()
-system.mem_ctrl.dram.range = system.mem_ranges[0]
-system.mem_ctrl.port = system.membus.master
+<span class="c1"># create a memory controller
+</span><span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span> <span class="o">=</span> <span class="n">MemCtrl</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span> <span class="o">=</span> <span class="n">DDR3_1600_8x8</span><span class="p">()</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span><span class="o">.</span><span class="nb">range</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
 
-# in the syscall emulation mode, we just need to pass the application binary
+<span class="c1"># in the syscall emulation mode, we just need to pass the application binary
 # then give this process to the cpu workload
 # and finally create the functional exectuion contexts in the CPU
-process = Process()
-process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
-system.cpu.workload = process
-system.cpu.createThreads()
+</span><span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">()</span>
+<span class="n">process</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tests/test-progs/hello/bin/x86/linux/hello'</span><span class="p">]</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">workload</span> <span class="o">=</span> <span class="n">process</span>
+<span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createThreads</span><span class="p">()</span>
 
-# finally we instantiate the system and run the simulation
-root = Root(full_system=False, system=system)
+<span class="c1"># finally we instantiate the system and run the simulation
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">full_system</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">)</span>
 
-m5.instantiate()
+<span class="n">m5</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
 
-print("Beginning simulation")
-exit_event = m5.simulate()
-print("Exiting @ tick {} because {}".format(m5.curTick(), exit_event.getCause()))
-</code></pre>
+<span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
+<span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span>
+   <span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+</code></pre></div></div>
 
 <h2 id="adding-a-cache-to-the-configuration-script">Adding a Cache to the configuration script</h2>
 <ul>
@@ -156,174 +165,178 @@ print("Exiting @ tick {} because {}".format(m5.curTick(), exit_event.getCause())
   <li>the Cache Object is implemented in the src/mem/cache/Cache.py</li>
 </ul>
 
-<p><code class="highlighter-rouge">tutorial/caches.py</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tutorial/caches.py
+</code></pre></div></div>
 
-<pre><code class="language-python3">import m5
-from m5.objects import Cache
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="n">Cache</span>
 
-class L1Cache(Cache):
-    # look at the source code to figure out what these parameters mean
-    # they are parameters that do not have any default values in base cache
-    assoc = 2
-    tag_latency = 2
-    data_latency = 2
-    response_latency = 2
-    mshrs = 4
-    tgts_per_mshr = 20
+<span class="k">class</span> <span class="nc">L1Cache</span><span class="p">(</span><span class="n">Cache</span><span class="p">):</span>
+    <span class="c1"># look at the source code to figure out what these parameters mean
+</span>    <span class="c1"># they are parameters that do not have any default values in base cache
+</span>    <span class="n">assoc</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">tag_latency</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">data_latency</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">response_latency</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">mshrs</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">tgts_per_mshr</span> <span class="o">=</span> <span class="mi">20</span>
 
-    def __init__(self, options=None):
-       super(L1Cache, self).__init__()
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L1Cache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
-    def connectCPU(self, cpu):
-       raise NotImplementedError
+    <span class="k">def</span> <span class="nf">connectCPU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+       <span class="k">raise</span> <span class="nb">NotImplementedError</span>
 
-    def connectBus(self, bus):
-      self.mem_side = bus.slave
+    <span class="k">def</span> <span class="nf">connectBus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mem_side</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">slave</span>
 
-class L1ICache(L1Cache):
-    size = '16kB'
+<span class="k">class</span> <span class="nc">L1ICache</span><span class="p">(</span><span class="n">L1Cache</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s">'16kB'</span>
 
-    def __init__(self, size=None):
-       super(L1ICache, self).__init__()
-       if not size:
-          return
-       self.size=size
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L1ICache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+          <span class="k">return</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span>
 
-    def connectCPU(self, cpu):
-       self.cpu_side = cpu.icache_port
+    <span class="k">def</span> <span class="nf">connectCPU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cpu_side</span> <span class="o">=</span> <span class="n">cpu</span><span class="o">.</span><span class="n">icache_port</span>
 
-class L1DCache(L1Cache):
-    size = '64kB'
+<span class="k">class</span> <span class="nc">L1DCache</span><span class="p">(</span><span class="n">L1Cache</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s">'64kB'</span>
 
-    def __init__(self, size=None):
-       super(L1DCache, self).__init__()
-       if not size:
-          return
-       self.size=size
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L1DCache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+          <span class="k">return</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span>
 
-    def connectCPU(self, cpu):
-       self.cpu_side = cpu.dcache_port
+    <span class="k">def</span> <span class="nf">connectCPU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cpu_side</span> <span class="o">=</span> <span class="n">cpu</span><span class="o">.</span><span class="n">dcache_port</span>
 
 
-class L2Cache(Cache):
-    size = '256kB'
-    assoc = 8
-    tag_latency = 20
-    data_latency = 20
-    response_latency = 20
-    mshrs =20
-    tgts_per_mshr = 12
+<span class="k">class</span> <span class="nc">L2Cache</span><span class="p">(</span><span class="n">Cache</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s">'256kB'</span>
+    <span class="n">assoc</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">tag_latency</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">data_latency</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">response_latency</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">mshrs</span> <span class="o">=</span><span class="mi">20</span>
+    <span class="n">tgts_per_mshr</span> <span class="o">=</span> <span class="mi">12</span>
 
-    def __init__(self, size=None):
-       super(L2Cache, self).__init__()
-       if not size:
-          return
-       self.size=size
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">L2Cache</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+          <span class="k">return</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span>
 
-    def connectCPUSideBus(self, bus):
-       self.cpu_side = bus.master
+    <span class="k">def</span> <span class="nf">connectCPUSideBus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cpu_side</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">master</span>
 
-    def connectMemSideBus(self, bus):
-       self.mem_side = bus.slave
-</code></pre>
+    <span class="k">def</span> <span class="nf">connectMemSideBus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">mem_side</span> <span class="o">=</span> <span class="n">bus</span><span class="o">.</span><span class="n">slave</span>
+</code></pre></div></div>
 
 <p><code class="highlighter-rouge">tutorial/two_level.py</code></p>
 
-<pre><code class="language-python3">import m5
-from m5.objects import *
-from caches import *
-import argparse
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">caches</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 
-def get_arguments():
-    parser = argparse.ArgumentParser()
+<span class="k">def</span> <span class="nf">get_arguments</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
 
-    parser.add_argument("--l1d_size", help="L1 data cache size")
-    parser.add_argument("--l1i_size", help="L1 instruction cache size")
-    parser.add_argument("--l2_size", help="L2 cache size")
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"--l1d_size"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"L1 data cache size"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"--l1i_size"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"L1 instruction cache size"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"--l2_size"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"L2 cache size"</span><span class="p">)</span>
 
-    args = parser.parse_args()
-    return args
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">args</span>
 
 
-if __name__ == "__m5_main__":
-    # the system object will be the parent of all other objects
-    # in the simulated system
-    # it contains alot of functional information (e.g. physical memory ranges, root clock domain, kernel ...)
-    args = get_arguments()
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__m5_main__"</span><span class="p">:</span>
+    <span class="c1"># the system object will be the parent of all other objects
+</span>    <span class="c1"># in the simulated system
+</span>    <span class="c1"># it contains alot of functional information 
+</span>    <span class="c1"># (e.g. physical memory ranges, root clock domain, kernel ...)
+</span>    <span class="n">args</span> <span class="o">=</span> <span class="n">get_arguments</span><span class="p">()</span>
 
-    system = System()
+    <span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">()</span>
 
-    # set clock domain
-    system.clk_domain = SrcClockDomain()
-    system.clk_domain.clock = '1GHz'
-    system.clk_domain.voltage_domain = VoltageDomain()
+    <span class="c1"># set clock domain
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span> <span class="o">=</span> <span class="n">SrcClockDomain</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="s">'1GHz'</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">clk_domain</span><span class="o">.</span><span class="n">voltage_domain</span> <span class="o">=</span> <span class="n">VoltageDomain</span><span class="p">()</span>
 
-    # set memory : memory is usually timing mode
-    system.mem_mode = 'timing'
-    system.mem_ranges = [AddrRange('512MB')]
+    <span class="c1"># set memory : memory is usually timing mode
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">mem_mode</span> <span class="o">=</span> <span class="s">'timing'</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">AddrRange</span><span class="p">(</span><span class="s">'512MB'</span><span class="p">)]</span>
 
-    # set cpu
-    system.cpu = TimingSimpleCPU()
+    <span class="c1"># set cpu
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span> <span class="o">=</span> <span class="n">TimingSimpleCPU</span><span class="p">()</span>
 
-    # create caches
-    system.cpu.icache = L1ICache(args.l1d_size)
-    print(system.cpu.icache.size)
-    system.cpu.dcache = L1DCache(args.l1i_size)
+    <span class="c1"># create caches
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span> <span class="o">=</span> <span class="n">L1ICache</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l1d_size</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache</span> <span class="o">=</span> <span class="n">L1DCache</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l1i_size</span><span class="p">)</span>
 
-    # connect caches to cpu ports
-    system.cpu.icache.connectCPU(system.cpu)
-    system.cpu.dcache.connectCPU(system.cpu)
+    <span class="c1"># connect caches to cpu ports
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span><span class="o">.</span><span class="n">connectCPU</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache</span><span class="o">.</span><span class="n">connectCPU</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="p">)</span>
 
-    # we need to create a L2 bus since the L2 cache only has a single port
-    system.l2bus = L2XBar()
+    <span class="c1"># we need to create a L2 bus since the L2 cache only has a single port
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">l2bus</span> <span class="o">=</span> <span class="n">L2XBar</span><span class="p">()</span>
 
-    # connect L1 cache to L2 bus
-    system.cpu.icache.connectBus(system.l2bus)
-    system.cpu.dcache.connectBus(system.l2bus)
+    <span class="c1"># connect L1 cache to L2 bus
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">icache</span><span class="o">.</span><span class="n">connectBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">l2bus</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">dcache</span><span class="o">.</span><span class="n">connectBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">l2bus</span><span class="p">)</span>
 
-    # create L2 caceh
-    system.l2cache = L2Cache(args.l2_size)
+    <span class="c1"># create L2 caceh
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">l2cache</span> <span class="o">=</span> <span class="n">L2Cache</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l2_size</span><span class="p">)</span>
 
-    # set systemwide memory bus
-    system.membus = SystemXBar()
+    <span class="c1"># set systemwide memory bus
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">membus</span> <span class="o">=</span> <span class="n">SystemXBar</span><span class="p">()</span>
 
-    # connect L2 cache
-    system.l2cache.connectCPUSideBus(system.l2bus)
-    system.l2cache.connectMemSideBus(system.membus)
+    <span class="c1"># connect L2 cache
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">l2cache</span><span class="o">.</span><span class="n">connectCPUSideBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">l2bus</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">l2cache</span><span class="o">.</span><span class="n">connectMemSideBus</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="p">)</span>
 
-    # only required for X86
-    # create IO controller on the cpu
-    # and connect it to the mem bus
-    system.cpu.createInterruptController()
-    system.cpu.interrupts[0].pio = system.membus.master
-    system.cpu.interrupts[0].int_master = system.membus.slave
-    system.cpu.interrupts[0].int_slave = system.membus.master
+    <span class="c1"># only required for X86
+</span>    <span class="c1"># create IO controller on the cpu
+</span>    <span class="c1"># and connect it to the mem bus
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createInterruptController</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pio</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_master</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">interrupts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int_slave</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
 
-    system.system_port = system.membus.slave
+    <span class="n">system</span><span class="o">.</span><span class="n">system_port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">slave</span>
 
-    # create a memory controller
-    system.mem_ctrl = MemCtrl()
-    system.mem_ctrl.dram = DDR3_1600_8x8()
-    system.mem_ctrl.dram.range = system.mem_ranges[0]
-    system.mem_ctrl.port = system.membus.master
+    <span class="c1"># create a memory controller
+</span>    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span> <span class="o">=</span> <span class="n">MemCtrl</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span> <span class="o">=</span> <span class="n">DDR3_1600_8x8</span><span class="p">()</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">dram</span><span class="o">.</span><span class="nb">range</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mem_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">mem_ctrl</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">membus</span><span class="o">.</span><span class="n">master</span>
 
-    # in the syscall emulation mode, we just need to pass the application binary
-    # then give this process to the cpu workload
-    # and finally create the functional exectuion contexts in the CPU
-    process = Process()
-    process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
-    system.cpu.workload = process
-    system.cpu.createThreads()
+    <span class="c1"># in the syscall emulation mode, 
+</span>    <span class="c1"># we just need to pass the application binary
+</span>    <span class="c1"># then give this process to the cpu workload
+</span>    <span class="c1"># and finally create the functional exectuion contexts in the CPU
+</span>    <span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">()</span>
+    <span class="n">process</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tests/test-progs/hello/bin/x86/linux/hello'</span><span class="p">]</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">workload</span> <span class="o">=</span> <span class="n">process</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">createThreads</span><span class="p">()</span>
 
-    # finally we instantiate the system and run the simulation
-    root = Root(full_system=False, system=system)
+    <span class="c1"># finally we instantiate the system and run the simulation
+</span>    <span class="n">root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">full_system</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">)</span>
 
-    m5.instantiate()
+    <span class="n">m5</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
 
-    print("Beginning simulation")
-    exit_event = m5.simulate()
-    print("Exiting @ tick {} because {}".format(m5.curTick(), exit_event.getCause()))
-</code></pre>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
+    <span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span>
+      <span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+</code></pre></div></div>
 
 <h1 id="output-statistics">Output statistics</h1>
 <ul>

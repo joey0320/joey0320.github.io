@@ -6,12 +6,24 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Mar 2021 02:08:16 +0900</pubDate>
-    <lastBuildDate>Fri, 12 Mar 2021 02:08:16 +0900</lastBuildDate>
+    <pubDate>Fri, 12 Mar 2021 17:53:56 +0900</pubDate>
+    <lastBuildDate>Fri, 12 Mar 2021 17:53:56 +0900</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
-        <title>Blog Editing</title>
+        <title>more about pintools</title>
+        <description>&lt;h1 id=&quot;difference-btw-pin--pintool&quot;&gt;Difference btw pin &amp;amp; pintool&lt;/h1&gt; &lt;h2 id=&quot;pin&quot;&gt;pin&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;a jit (just in time) compiler&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;pintool&quot;&gt;pintool&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;code (a shared library to be exact) that we put in...</description>
+        <pubDate>Fri, 12 Mar 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/macsim/2021/03/12/macsim2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/macsim/2021/03/12/macsim2.html</guid>
+        
+        
+        <category>Macsim</category>
+        
+      </item>
+    
+      <item>
+        <title>macsim simulator</title>
         <description>&lt;h1 id=&quot;1-generating-traces&quot;&gt;1. generating traces&lt;/h1&gt; &lt;h2 id=&quot;x86-traces&quot;&gt;x86 traces&lt;/h2&gt; &lt;ul&gt; &lt;li&gt;install pintools &lt;ul&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;export PIN_ROOT=/path/to/pin/dir&lt;/code&gt; where this path can be found by &lt;code class=&quot;highlighter-rouge&quot;&gt;which pin&lt;/code&gt;&lt;/li&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cp libzlib.a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;$PIN_ROOT&lt;/code&gt;&lt;/li&gt;...</description>
         <pubDate>Thu, 11 Mar 2021 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/macsim/2021/03/11/macsim1.html</link>
@@ -112,18 +124,6 @@
         <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
         <link>http://localhost:4000/gem5/2021/02/15/gem5-2.html</link>
         <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-2.html</guid>
-        
-        
-        <category>Gem5</category>
-        
-      </item>
-    
-      <item>
-        <title>1. Gem5 simulator - quick start</title>
-        <description>&lt;h1 id=&quot;gem5-simulator&quot;&gt;Gem5 simulator&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;references : &lt;a href=&quot;https://www.gem5.org/documentation&quot;&gt;gem5.org&lt;/a&gt;&lt;/li&gt; &lt;li&gt;copy of gem5.org&lt;/li&gt; &lt;li&gt;just for studying gem5&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;what-is-gem5&quot;&gt;what is Gem5?&lt;/h2&gt; &lt;p&gt;gem5 is a modular discrete event driven computer system simulator...</description>
-        <pubDate>Mon, 15 Feb 2021 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/gem5/2021/02/15/gem5-1.html</link>
-        <guid isPermaLink="true">http://localhost:4000/gem5/2021/02/15/gem5-1.html</guid>
         
         
         <category>Gem5</category>

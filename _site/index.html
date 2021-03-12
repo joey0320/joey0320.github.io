@@ -155,7 +155,29 @@
   
   <li>
     <h2>
-      <a class="post-link" href="/macsim/2021/03/11/macsim1.html">Blog Editing</a>
+      <a class="post-link" href="/macsim/2021/03/12/macsim2.html">more about pintools</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Difference btw pin &amp; pintool pin a jit (just in time) compiler pintool code (a shared library to be exact) that we put in to program what kind of analaysis we are going to perform typical usage pin -t "pintool_name.so" [pintool args] -- [program binary] [program args] some tutorials for...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">March 12, 2021</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/Macsim">Macsim</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/macsim/2021/03/11/macsim1.html">macsim simulator</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
       <p>1. generating traces x86 traces install pintools export PIN_ROOT=/path/to/pin/dir where this path can be found by which pin cp libzlib.a to $PIN_ROOT need to change makefile.rules line 50 to TOOL_LIBS += $(PIN_ROOT)/extras/xed-intel64/lib/libzlib.a cd /macsim/tools/x86_trace_generator make generate traces from the x86_trace_generator/obj-intel64 directory, pin -t trace_generator.so -- binary nptx (GPU traces) env...</p>
@@ -240,28 +262,6 @@
     </section>
     <section class="post-meta">
       <div class="post-date">February 16, 2021</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Gem5">Gem5</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/gem5/2021/02/15/gem5-2.html">2. Gem5 - Code style</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Gem5 Code style Naming Conventions class names : Upper CamelCase ClassName acronyms : all uppercase CPU class members (methods, variables) : lower CamelCase aMemberVariable local variables : underscore local_variable File structure never contain using namespace ... header files Documentation Doxygen style ``` /** This is the brief description. This is...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">February 15, 2021</div>
       <div class="post-categories">
       in 
         

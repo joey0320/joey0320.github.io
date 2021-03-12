@@ -1,25 +1,107 @@
-<h1 id="gem5-code-style">Gem5 Code style</h1>
-<h2 id="naming-conventions">Naming Conventions</h2>
+<h1 id="creating-a-very-simple-simobject">Creating a Very simple SimObject</h1>
+
+<h2 id="1-create-a-python-class-for-the-simobject">1. Create a Python Class for the SimObject</h2>
+<p><code class="highlighter-rouge">gem5/src/tutorial/HelloObject.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">m5.params</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">m5.SimObject</span> <span class="kn">import</span> <span class="n">SimObject</span>
+
+<span class="c1"># python wrapper for the C++ implementation of the SimObject
+</span><span class="k">class</span> <span class="nc">HelloObject</span><span class="p">(</span><span class="n">SimObject</span><span class="p">):</span>
+    <span class="c1"># convention to have same name with class
+</span>    <span class="c1"># type is the C++ class that you are wrapping with this Python SimObject
+</span>    <span class="nb">type</span><span class="o">=</span><span class="s">'HelloObject'</span>
+
+    <span class="c1"># file that contains the declaration of the class used as the 'type' parameter
+</span>    <span class="c1"># convention is to use lowercase and underscore with the same name
+</span>    <span class="n">cxx_header</span><span class="o">=</span><span class="s">'tutorial/hello_object.hh'</span>
+</code></pre></div></div>
+
+<h2 id="2-implement-the-simobject-in-c">2. Implement the SimObject in C++</h2>
+<p><code class="highlighter-rouge">gem5/src/tutorial/hello_object.hh</code></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef __TUTORIAL_GEM5_HELLO_OBJECT__
+#define __TUTORIAL_GEM5_HELLO_OBJECT__
+</span>
+<span class="cp">#include "params/HelloObject.hh"
+#include "sim/sim_object.hh"
+</span>
+<span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span> <span class="p">{</span>
+    <span class="nl">public:</span>
+       <span class="c1">// constructor of a SimObject takes a parameter object</span>
+       <span class="c1">// which is autmatically created by the build system</span>
+       <span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<p><code class="highlighter-rouge">gem5/src/tutorial/hello_object.hh</code></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "tutorial/hello_object.hh"
+#include &lt;iostream&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="c1">// constructor : pass the parameter object to SimObject</span>
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"hello world from simobject"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// implement for the parameter type</span>
+<span class="c1">// implicitly created from the SimObject Python declaration, namely, the create function</span>
+<span class="c1">// returns a new instantiation of the SimObject</span>
+<span class="n">HelloObject</span><span class="o">*</span> <span class="n">HelloObjectParams</span><span class="o">::</span><span class="n">create</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">HelloObject</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="3-register-the-files">3. Register the files</h2>
+
 <ul>
-  <li>class names : Upper CamelCase <code class="highlighter-rouge">ClassName</code></li>
-  <li>acronyms : all uppercase <code class="highlighter-rouge">CPU</code></li>
-  <li>class members (methods, variables) : lower CamelCase <code class="highlighter-rouge">aMemberVariable</code></li>
-  <li>local variables : underscore <code class="highlighter-rouge">local_variable</code></li>
+  <li>we have to tell the build system about the C++ and python files</li>
 </ul>
 
-<h2 id="file-structure">File structure</h2>
+<p><code class="highlighter-rouge">gem5/src/tutorial/SConscript</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Import</span><span class="p">(</span><span class="s">'*'</span><span class="p">)</span>
+
+<span class="n">SimObject</span><span class="p">(</span><span class="s">'HelloObject.py'</span><span class="p">)</span>
+<span class="n">Source</span><span class="p">(</span><span class="s">'hello_object.cc'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="4-rebuild-the-gem5-system">4. Rebuild the Gem5 system</h2>
+<p><code class="highlighter-rouge">scons build/X86/gem5.opt -j20</code></p>
+
+<h2 id="5-create-a-config-script-and-run-it-">5. Create a config script and run it !!</h2>
+
 <ul>
-  <li>never contain <code class="highlighter-rouge">using namespace ...</code> header files</li>
+  <li>config script</li>
 </ul>
 
-<h2 id="documentation">Documentation</h2>
-<ul>
-  <li>Doxygen style
-```
-/**</li>
-  <li>This is the brief description. This is the start of the detailed</li>
-  <li>description. Detailed Description continued.
- */
- ```</li>
-</ul>
+<p><code class="highlighter-rouge">gem5/config/tutorial/run_script.py</code></p>
 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">m5</span>
+<span class="kn">from</span> <span class="nn">m5.objects</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">full_system</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">hello</span> <span class="o">=</span> <span class="n">HelloObject</span><span class="p">()</span>
+
+<span class="n">m5</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Beginning simulation"</span><span class="p">)</span>
+<span class="n">exit_event</span> <span class="o">=</span> <span class="n">m5</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Exiting @ tick {} because {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m5</span><span class="o">.</span><span class="n">curTick</span><span class="p">(),</span> <span class="n">exit_event</span><span class="o">.</span><span class="n">getCause</span><span class="p">()))</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>run it !!
+<code class="highlighter-rouge">build/X86/gem5.opt configs/tutorial/run_script.py</code></p>
+  </li>
+  <li>
+    <p>references : <a href="https://www.gem5.org/documentation">gem5.org</a></p>
+  </li>
+</ul>

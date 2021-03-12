@@ -1,0 +1,64 @@
+<h1 id="some-more-event-driven-programming">Some More Event Driven Programming</h1>
+
+<h2 id="1-more-event-scheduling">1. More Event Scheduling</h2>
+<ul>
+  <li>We can also schedule new events within an event process action.</li>
+  <li>
+    <p>For instance, we are going to add a latency parameter to the HelloObject and a parameter for how many times to fire the event</p>
+  </li>
+  <li><code class="highlighter-rouge">src/tutorial/hello_object.hh</code></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span>
+<span class="p">{</span>
+  <span class="nl">private:</span>
+    <span class="kt">void</span> <span class="n">processEvent</span><span class="p">();</span>
+
+    <span class="n">EventFunctionWrapper</span> <span class="n">event</span><span class="p">;</span>
+
+    <span class="n">Tick</span> <span class="n">latency</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">timesLeft</span><span class="p">;</span>
+
+  <span class="nl">public:</span>
+    <span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="n">startup</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">src/tutorial/hello_object.cc</code></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span> <span class="o">:</span>
+    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">event</span><span class="p">([</span><span class="k">this</span><span class="p">]{</span><span class="n">processEvent</span><span class="p">();},</span> <span class="n">name</span><span class="p">()),</span>
+    <span class="n">latency</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">timesLeft</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Created the hello object</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">startup</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">latency</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="n">HelloObject</span><span class="o">::</span><span class="n">processEvent</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">timesLeft</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Hello world! Processing the event! %d left</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">timesLeft</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">timesLeft</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Done firing!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="n">latency</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
+</ul>
+

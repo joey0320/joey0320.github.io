@@ -1,21 +1,100 @@
 <hr />
 
 <p>layout: post
-title:  "Container Part 2"
-date:   2021-02-04T14:25:52-05:00
+title:  "more about pintools" 
 author: Joonho Hwangbo </p>
 
-<h2>categories: Container</h2>
+<h2>categories: Macsim</h2>
 
-<h1>Container Part 2 - Container Internals</h1>
+<h1>Difference btw pin &amp; pintool</h1>
 
-<p><img src="/assets/docker_logo.png" alt="Docker" title="" /></p>
+<h2>pin</h2>
 
-<h2>1. Overview</h2>
+<ul>
+<li>a jit (just in time) compiler</li>
+</ul>
 
-<p><img src="/assets/DockerInternals.png" alt="docker internals" title="" />
-- client : docker user, sends requests using cli
-- daemon (docker engine) : responsible for image management &amp; build, authentication, security, core networking(constructs default bridge, docker0 etc), orchestration, uses the REST API to get requests from the client
-- containerd : controls the container life cycle
-- runc : cli that wraps around libcontainer, interacts with the kernel to construct namespaces, cgroups etc
-- shim : detaches runc from containerd(????)</p>
+<h2>pintool</h2>
+
+<ul>
+<li>code (a shared library to be exact) that we put in to program what kind of analaysis we are going to perform</li>
+</ul>
+
+<h2>typical usage</h2>
+
+<p><code>pin -t "pintool_name.so" [pintool args] -- [program binary] [program args]</code></p>
+
+<h2>some tutorials for building a pintool</h2>
+
+<ul>
+<li>this code generates a pintool that counts the number of instructions</li>
+</ul>
+
+<p>```cpp</p>
+
+<h1>include <iostream></h1>
+
+<h1>include <fstream></h1>
+
+<h1>include "pin.H"</h1>
+
+<p>using std::cerr;
+using std::ofstream;
+using std::ios;
+using std::string;
+using std::endl;</p>
+
+<p>ofstream OutFile;</p>
+
+<p>static UINT64 icount = 0;</p>
+
+<p>VOID docount() { icount++; }</p>
+
+<p>// pin calls this function every time a new instruction is executed
+VOID Instruction(INS ins, VOID *v) {
+  // Insert a call to docount before every instruction, no arguments are passed
+  INS<em>InsertCall(ins, IPOINT</em>BEFORE, (AFUNPTR)docount, IARG_END);
+}</p>
+
+<p>KNOB<string> KnobOutputFile(KNOB<em>MODE</em>WRITEONCE, "pintool",
+  | "o", "inscount.out", "specify output file name");</p>
+
+<p>// This function is called when the application exits
+VOID Fini(INT32 code, VOID *v) {
+  OutFile.setf(ios::showbase);
+  OutFile &lt;&lt; "count" &lt;&lt; icount &lt;&lt; endl;
+  OutFile.close();
+}</p>
+
+<p>INT32 Usage() {
+  cerr &lt;&lt; "This tool counts the number of dynamic instructions executed" &lt;&lt; endl;
+  cerr &lt;&lt; endl &lt;&lt; KNOB_BASE::StringKnobSummary() &lt;&lt; endl;
+  return -1;
+}</p>
+
+<p>int main (int argc, char * argv[]) {
+  // initialize pin
+  if (PIN_Init(argc, argv))
+  | return Usage();</p>
+
+<p>OutFile.open(KnobOutputFile.Value().c_str());</p>
+
+<p>// register callback to be called to instrument instructions
+  INS_AddInstrumentFunction(Instruction, 0);</p>
+
+<p>// register fini to be called when the application exits
+  PIN_AddFiniFunction(Fini, 0);</p>
+
+<p>// start the program
+  PIN_StartProgram();</p>
+
+<p>return 0;
+}
+```</p>
+
+<ul>
+<li><p>look at the macsim-1 post to see how these pintool files are compiled</p></li>
+<li><p>in the main function, Instruction is registered as a callback function</p></li>
+<li>then for Instruction is called for every instruction of the target process</li>
+<li>inside the Instruction, docount is registered as a callback function which increments the counter for every instruction </li>
+</ul>

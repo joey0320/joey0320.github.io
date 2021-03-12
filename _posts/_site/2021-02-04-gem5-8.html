@@ -1,0 +1,178 @@
+<h1 id="adding-simobjects-as-parameters">Adding SimObjects as Parameters</h1>
+
+<h2 id="other-simobjects-as-parameters">Other SimObjects as Parameters</h2>
+<ul>
+  <li>You can also specify other SimObjects as parameters</li>
+</ul>
+
+<h2 id="implementation">Implementation</h2>
+<ul>
+  <li>
+    <p>we will create a <code class="highlighter-rouge">GoodbyeObject</code> and pass it to <code class="highlighter-rouge">HelloObject</code></p>
+  </li>
+  <li>
+    <p>add to <code class="highlighter-rouge">HelloObject.py</code> since <code class="highlighter-rouge">GoodbyeObject</code> is similar to <code class="highlighter-rouge">HelloObject</code></p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GoodbyeObject</span><span class="p">(</span><span class="n">SimObject</span><span class="p">):</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s">'GoodbyeObject'</span>
+    <span class="n">cxx_header</span><span class="o">=</span><span class="s">'tutorial/goodbye_object.hh'</span>
+
+    <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">Param</span><span class="o">.</span><span class="n">MemoryBandwidth</span><span class="p">(</span><span class="s">'100MB/s'</span><span class="p">,</span> <span class="s">"BW to fill the buffer"</span><span class="p">)</span>
+    <span class="n">buffer_size</span> <span class="o">=</span> <span class="n">Param</span><span class="o">.</span><span class="n">MemorySize</span><span class="p">(</span><span class="s">'1kB'</span><span class="p">,</span> <span class="s">"size of the buffer to fill"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>modify <code class="highlighter-rouge">SConscript</code>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Source('goodbye_object.cc')
+</code></pre></div>    </div>
+  </li>
+  <li>add <code class="highlighter-rouge">goodbye_object.hh</code> and <code class="highlighter-rouge">goodbye_object.cc</code></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef __TUTORIAL_GEM5_GOODBYE_OBJECT__
+#define __TUTORIAL_GEM5_GOODBYE_OBJECT__
+</span>
+<span class="cp">#include "params/GoodbyeObject.hh"
+#include "sim/sim_object.hh"
+#include &lt;string&gt;
+</span>
+<span class="k">class</span> <span class="nc">GoodbyeObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimObject</span> <span class="p">{</span>
+    <span class="nl">private:</span>
+       <span class="kt">void</span> <span class="n">processEvent</span><span class="p">();</span>
+       <span class="kt">void</span> <span class="n">fillBuffer</span><span class="p">();</span>
+
+       <span class="n">EventWrapper</span><span class="o">&lt;</span><span class="n">GoodbyeObject</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GoodbyeObject</span><span class="o">::</span><span class="n">processEvent</span><span class="o">&gt;</span> <span class="n">event</span><span class="p">;</span>
+
+       <span class="kt">float</span> <span class="n">bandwidth</span><span class="p">;</span>
+       <span class="kt">int</span> <span class="n">bufferSize</span><span class="p">;</span>
+       <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">;</span>
+       <span class="kt">int</span> <span class="n">bufferUsed</span><span class="p">;</span>
+       <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">message</span><span class="p">;</span>
+
+    <span class="nl">public:</span>
+       <span class="n">GoodbyeObject</span><span class="p">(</span><span class="n">GoodbyeObjectParams</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
+       <span class="o">~</span><span class="n">GoodbyeObject</span><span class="p">();</span>
+
+       <span class="kt">void</span> <span class="n">sayGoodbye</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">);</span>
+
+<span class="p">};</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<ul>
+  <li>how GoodbyeObject works
+    <ul>
+      <li>something calls sayGoodbye</li>
+      <li>sayGoodbye calls fillBuffer which schedules a event when
+  the buffer is not filled</li>
+      <li>the scheduled event calls fillBuffer again …</li>
+      <li>repeat until the buffer is full</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "tutorial/goodbye_object.hh"
+</span>
+<span class="cp">#include "base/logging.hh"
+#include "base/trace.hh"
+#include "debug/Hello.hh"
+#include "sim/sim_exit.hh"
+</span>
+<span class="cp">#include &lt;assert.h&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">GoodbyeObject</span><span class="o">::</span><span class="n">GoodbyeObject</span><span class="p">(</span><span class="n">GoodbyeObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
+    <span class="n">event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">),</span>
+    <span class="n">bandwidth</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">bandwidth</span><span class="p">),</span>
+    <span class="n">bufferSize</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">buffer_size</span><span class="p">),</span>
+    <span class="n">buffer</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span>
+    <span class="n">bufferUsed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+       <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">bufferSize</span><span class="p">];</span>
+       <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Created GoodbyeObject</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">GoodbyeObject</span><span class="o">::~</span><span class="n">GoodbyeObject</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">delete</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">GoodbyeObject</span><span class="o">::</span><span class="n">processEvent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Processing Event</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">fillBuffer</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">GoodbyeObject</span><span class="o">::</span><span class="n">sayGoodbye</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">other_name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Saying goodbye to %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">other_name</span><span class="p">);</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s">"Goodbye "</span> <span class="o">+</span> <span class="n">other_name</span><span class="p">;</span>
+    <span class="n">fillBuffer</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">GoodbyeObject</span><span class="o">::</span><span class="n">fillBuffer</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">message</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">bytes_copied</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">message</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="p">;</span>
+          <span class="n">it</span> <span class="o">!=</span> <span class="n">message</span><span class="p">.</span><span class="n">end</span><span class="p">()</span> <span class="o">&amp;&amp;</span>
+          <span class="n">bufferUsed</span> <span class="o">&lt;</span> <span class="n">bufferSize</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">;</span> <span class="c1">//char has null</span>
+          <span class="n">it</span><span class="o">++</span><span class="p">,</span> <span class="n">bufferUsed</span><span class="o">++</span><span class="p">,</span> <span class="n">bytes_copied</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+       <span class="n">buffer</span><span class="p">[</span><span class="n">bufferUsed</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span>
+    <span class="p">}</span>
+
+   <span class="k">if</span> <span class="p">(</span> <span class="n">bufferUsed</span> <span class="o">&lt;</span> <span class="n">bufferSize</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span> <span class="c1">// buffer left</span>
+      <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Scheduling another filBuffer in %d ticks</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">bytes_copied</span> <span class="o">*</span> <span class="n">bandwidth</span><span class="p">);</span>
+      <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="n">bytes_copied</span> <span class="o">*</span> <span class="n">bandwidth</span><span class="p">);</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">//buffer full</span>
+      <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"Buffer is full!!!! bye bye</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      <span class="n">exitSimLoop</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="n">bandwidth</span> <span class="o">*</span> <span class="n">bytes_copied</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">GoodbyeObject</span><span class="o">*</span> <span class="n">GoodbyeObjectParams</span><span class="o">::</span><span class="n">create</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">GoodbyeObject</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>add to <code class="highlighter-rouge">hello_object.hh</code>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GoodbyeObject</span> <span class="o">*</span><span class="n">goodbye</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>modify <code class="highlighter-rouge">hello_object.cc</code></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">HelloObject</span><span class="o">::</span><span class="n">HelloObject</span><span class="p">(</span><span class="n">HelloObjectParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">SimObject</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
+    <span class="n">event</span><span class="p">([</span><span class="k">this</span><span class="p">]{</span><span class="n">processEvent</span><span class="p">();},</span> <span class="n">name</span><span class="p">()),</span>
+    <span class="n">goodbye</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">goodbye_object</span><span class="p">),</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">HelloObject</span><span class="o">::</span><span class="n">processEvent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">timesLeft</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+       <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"[info] : processing Event : %d times left</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">timesLeft</span><span class="p">);</span>
+       <span class="n">schedule</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">curTick</span><span class="p">()</span> <span class="o">+</span> <span class="n">latency</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+       <span class="n">goodbye</span><span class="o">-&gt;</span><span class="n">sayGoodbye</span><span class="p">(</span><span class="n">myName</span><span class="p">);</span>
+       <span class="n">DPRINTF</span><span class="p">(</span><span class="n">Hello</span><span class="p">,</span> <span class="s">"[info] : Done processing!!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>modify config <code class="highlighter-rouge">run_hello.py</code></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="p">.</span><span class="n">hello</span><span class="p">.</span><span class="n">goodbye_object</span> <span class="o">=</span> <span class="n">GoodbyeObject</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="err">'</span><span class="mi">30</span><span class="n">B</span><span class="err">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/output-gem5-8.png" alt="Outputs" /></p>
+
+<ul>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
+</ul>

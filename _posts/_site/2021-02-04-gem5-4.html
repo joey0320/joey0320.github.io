@@ -1,0 +1,53 @@
+<h1 id="setting-debug-flags">Setting Debug Flags</h1>
+
+<h2 id="some-examples">Some examples</h2>
+<ul>
+  <li>
+    <p>debugging dram
+<code class="highlighter-rouge">build/X86/gem5.opt --debug-flags=DRAM configs/learning_gem5/part1/simple.py | head -n 50</code></p>
+  </li>
+  <li>
+    <p>debugging cpu instruction
+<code class="highlighter-rouge">build/X86/gem5.opt --debug-flags=Exec configs/learning_gem5/part1/simple.py | head -n 50</code></p>
+  </li>
+  <li>
+    <p>for more debugging info
+<code class="highlighter-rouge">build/X86/gem5.opt --debug-help</code></p>
+  </li>
+</ul>
+
+<h2 id="setting-debugging-flags">Setting Debugging Flags</h2>
+
+<ul>
+  <li>add a debug flag to <code class="highlighter-rouge">gem5/src/tutorial/SConscript</code>
+    <ul>
+      <li><code class="highlighter-rouge">DebugFlag('Hello')</code></li>
+      <li>By declaring the flag in the SConscript file, a debug header is automatically generated that allows us to use the debug flag. The header file is in the debug directory and has the same name (and capitalization) as what we declare in the SConscript file. Therefore, we need to include the automatically generated header file in any files where we plan to use the debug flag.</li>
+    </ul>
+  </li>
+  <li>add header and debug msg to <code class="highlighter-rouge">hello_object.cc</code>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="cp">#include "debug/Hello.hh"
+</span> <span class="cp">#include "base/logging.hh"
+</span> <span class="cp">#include "base/trace.hh"
+</span></code></pre></div>    </div>
+    <ul>
+      <li><code class="highlighter-rouge">DPRINTF(Hello, "Created the hello object\n");
+</code></li>
+    </ul>
+  </li>
+  <li>recompile and run the config file</li>
+</ul>
+
+<h2 id="debugging-output">Debugging Output</h2>
+<ul>
+  <li>For each dynamic DPRINTF execution, three things are printed to stdout.</li>
+  <li>First, the current tick when the DPRINTF is executed.</li>
+  <li>Second, the name of the SimObject that called DPRINTF. This name is usually the Python variable name from the Python config file. However, the name is whatever the SimObject name() function returns.</li>
+  <li>Finally, you see whatever format string you passed to the DPRINTF function.</li>
+</ul>
+
+<p>You can control where the debug output goes with the –debug-file parameter. By default, all of the debugging output is printed to stdout. However, you can redirect the output to any file. The file is stored relative to the main gem5 output directory, not the current working directory.</p>
+
+<ul>
+  <li>references : <a href="https://www.gem5.org/documentation">gem5.org</a></li>
+</ul>

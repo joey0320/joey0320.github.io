@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>more about pintools</title>
+  <meta name="description" content="Difference btw pin &amp; pintoolpin  a jit (just in time) compiler">
+  
+  <meta name="author" content="Joonho Hwangbo">
+  <meta name="copyright" content="&copy; Joonho Hwangbo 2021">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Difference btw pin &amp; pintoolpin  a jit (just in time) compiler" />
+  <meta property="og:url" content="http://localhost:4000/macsim/2021/03/12/macsim2.html">
+  <meta property="og:site_name" content="Scratch Pad" />
+  <meta property="og:title" content="more about pintools" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="more about pintools">
+  <meta name="twitter:description" content="Difference btw pin &amp; pintoolpin  a jit (just in time) compiler">
+  <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
+  <meta name="twitter:url" content="http://localhost:4000/macsim/2021/03/12/macsim2.html">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/macsim/2021/03/12/macsim2.html">
+	<link rel="alternate" type="application/rss+xml" title="Scratch Pad" href="http://localhost:4000/feed.xml" />
+	
+	<!-- Tooltips -->
+	<script type="text/javascript">
+		window.tooltips = []
+	</script>
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Scratch Pad">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+				
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/posts/">Posts</a>
+	
+
+	
+	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">more about pintools</h1>
+      <p class="info">by <strong>Joonho Hwangbo</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">March 12, 2021</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Macsim">Macsim</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h1 id="difference-btw-pin--pintool">Difference btw pin &amp; pintool</h1>
+<h2 id="pin">pin</h2>
+<ul>
+  <li>a jit (just in time) compiler</li>
+</ul>
+
+<h2 id="pintool">pintool</h2>
+<ul>
+  <li>code (a shared library to be exact) that we put in to program what kind of analaysis we are going to perform</li>
+</ul>
+
+<h2 id="typical-usage">typical usage</h2>
+<p><code class="highlighter-rouge">pin -t "pintool_name.so" [pintool args] -- [program binary] [program args]</code></p>
+
+<h2 id="some-tutorials-for-building-a-pintool">some tutorials for building a pintool</h2>
+<ul>
+  <li>this code generates a pintool that counts the number of instructions</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include "pin.H"
+</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+
+<span class="n">ofstream</span> <span class="n">OutFile</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="n">UINT64</span> <span class="n">icount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="n">VOID</span> <span class="nf">docount</span><span class="p">()</span> <span class="p">{</span> <span class="n">icount</span><span class="o">++</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// pin calls this function every time a new instruction is executed</span>
+<span class="n">VOID</span> <span class="nf">Instruction</span><span class="p">(</span><span class="n">INS</span> <span class="n">ins</span><span class="p">,</span> <span class="n">VOID</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Insert a call to docount before every instruction, no arguments are passed</span>
+  <span class="n">INS_InsertCall</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span> <span class="n">IPOINT_BEFORE</span><span class="p">,</span> <span class="p">(</span><span class="n">AFUNPTR</span><span class="p">)</span><span class="n">docount</span><span class="p">,</span> <span class="n">IARG_END</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">KNOB</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">KnobOutputFile</span><span class="p">(</span><span class="n">KNOB_MODE_WRITEONCE</span><span class="p">,</span> <span class="s">"pintool"</span><span class="p">,</span>
+  <span class="o">|</span> <span class="s">"o"</span><span class="p">,</span> <span class="s">"inscount.out"</span><span class="p">,</span> <span class="s">"specify output file name"</span><span class="p">);</span>
+
+<span class="c1">// This function is called when the application exits</span>
+<span class="n">VOID</span> <span class="nf">Fini</span><span class="p">(</span><span class="n">INT32</span> <span class="n">code</span><span class="p">,</span> <span class="n">VOID</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">OutFile</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">ios</span><span class="o">::</span><span class="n">showbase</span><span class="p">);</span>
+  <span class="n">OutFile</span> <span class="o">&lt;&lt;</span> <span class="s">"count"</span> <span class="o">&lt;&lt;</span> <span class="n">icount</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="n">OutFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">INT32</span> <span class="nf">Usage</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"This tool counts the number of dynamic instructions executed"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">KNOB_BASE</span><span class="o">::</span><span class="n">StringKnobSummary</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+  <span class="c1">// initialize pin</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">PIN_Init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">))</span>
+  <span class="o">|</span> <span class="k">return</span> <span class="n">Usage</span><span class="p">();</span>
+
+  <span class="n">OutFile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">KnobOutputFile</span><span class="p">.</span><span class="n">Value</span><span class="p">().</span><span class="n">c_str</span><span class="p">());</span>
+
+  <span class="c1">// register callback to be called to instrument instructions</span>
+  <span class="n">INS_AddInstrumentFunction</span><span class="p">(</span><span class="n">Instruction</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// register fini to be called when the application exits</span>
+  <span class="n">PIN_AddFiniFunction</span><span class="p">(</span><span class="n">Fini</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// start the program</span>
+  <span class="n">PIN_StartProgram</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>look at the macsim-1 post to see how these pintool files are compiled</p>
+  </li>
+  <li>in the main function, Instruction is registered as a callback function</li>
+  <li>then for Instruction is called for every instruction of the target process</li>
+  <li>inside the Instruction, docount is registered as a callback function which increments a counter for call</li>
+</ul>
+
+</article>
+
+
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Scratch Pad</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+				
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+
+	
+
+	
+	<li class="nav-link"><a href="/posts/">Posts</a>
+	
+
+	
+	<li class="nav-link"><a href="/typography/">Typography</a>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:joonho0320@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">joonho0320@gmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://github.com/joey0320" title="Fork me on GitHub">
+              <i class="fa fa-github"></i>
+              <span class="username">joey0320</span>
+            </a>
+          </li>
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">somewhere I can write stuff
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
+<script src="//unpkg.com/popper.js@1"></script>
+<script src="//unpkg.com/tippy.js@5"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+
+	// Enable tooltips via Tippy.js
+	if (Array.isArray(window.tooltips)) {
+		window.tooltips.forEach(function(tooltip) {
+			var selector = tooltip[0];
+			var config = tooltip[1];
+			tippy(selector, config);
+		})
+	}
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>
